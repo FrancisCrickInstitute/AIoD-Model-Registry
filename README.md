@@ -5,8 +5,8 @@ This repository contains the central document that lists all AI models available
 This repository contains the core description for all AI models available within AIoD. All submissions for AI models must go through the PR process and conform to the existing template design.
 
 ## Contact Details:
-cameron.shand@crick.ac.uk
-jon.smith@crick.ac.uk
+* cameron.shand@crick.ac.uk
+* jon.smith@crick.ac.uk
 
 ## Development Setup:
 This repository is used in conjunction with the AIoD front ends available here:
