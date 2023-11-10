@@ -1,22 +1,23 @@
-# PROJECT NAME
-This is a template README.md for github repositories from the Software Development and Machine Learning Team. Make sure to remove any default information that is not relevant.
+# AIoD Model Registry
+This repository contains the central document that lists all AI models available within AIoD.
 
 ## Code Overview:
-A brief overview of the purpose of the repository.
+This repository contains the core description for all AI models available within AIoD. All submissions for AI models must go through the PR process and conform to the existing template design.
 
 ## Contact Details:
-Who to contact, how to contact, are github issues used? etc.
+cameron.shand@crick.ac.uk
+jon.smith@crick.ac.uk
 
 ## Development Setup:
-A comprehensive guide on setting up a functioning development environment as possible across as large a cross-section of platforms as possible.
+This repository is used in conjunction with the AIoD front ends available here:
+* https://github.com/FrancisCrickInstitute/ai-on-demand/
 
 ## Production Setup:
-A compreheensive guide on setting up a production environment. This should include notes on security where relevant.
+Install one of the AIoD front-ends or wrappers from:
+* https://github.com/FrancisCrickInstitute/ai-on-demand/
  
 ## Usage:
-* How to run the program.
-* List of inputs (expected file formats if relevant)
-* List of outputs (file format info if non-standard)
+Refer to your installed front-end or wrapper.
 
 ## Contribution Guidelines:
-A comprehensive guide to contributing to this repository. Including git workflows, style standards, and testing standards.
+TODO
