@@ -1,0 +1,31 @@
+{
+  "name": "SEAI U-Net",
+  "short_name": "seai_unet",
+  "versions": [
+    {
+      "name": "U-Net",
+      "tasks": [
+        {
+          "task": "mito",
+          "location": "/nemo/stp/ddt/working/shandc/aiod_models/mito_5nm_intensity_augs_warp.best.969.pt",
+          "config_path": "/nemo/stp/ddt/working/shandc/aiod_models/mito_5nm_intensity_augs_warp.yml"
+        }
+      ]
+    },
+    {
+      "name": "Attention U-Net",
+      "tasks": [
+        {
+          "task": "mito",
+          "location": "/nemo/stp/ddt/working/shandc/aiod_models/Attention_HUNet_3e5_Adam_restart_12_16.best.1266.pt",
+          "config_path": "/nemo/stp/ddt/working/shandc/aiod_models/Attention_HUNet_3e5_Adam_restart_12_16.yml"
+        },
+        {
+          "task": "ne",
+          "location": "/nemo/stp/ddt/working/shandc/aiod_models/Attention_HUNet_NE.best.368.pt",
+          "config_path": "/nemo/stp/ddt/working/shandc/aiod_models/Attention_HUNet_NE.yml"
+        }
+      ]
+    }
+  ]
+}
