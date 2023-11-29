@@ -1,0 +1,23 @@
+[build-system]
+build-backend = 'setuptools.build_meta'
+requires = [
+    'setuptools>=61.0.0',
+]
+
+[project]
+name = "aiod-registry"
+description = "A registry of models for use with AI OnDemand (AIoD)"
+version = "0.0.1"
+authors = [
+    {name = "Cameron Shand", email = "cameron.shand@crick.ac.uk"},
+    {name = "Jon Smith", email = "jon.smith@crick.ac.uk"}
+]
+dependencies = [
+    "pytest",
+    "pydantic >= 2.0"
+]
+requires-python = ">=3.9"
+dynamic = ["readme"]
+
+[tool.setuptools.dynamic]
+readme = {file = ["README.md"], content-type = "text/markdown"}
