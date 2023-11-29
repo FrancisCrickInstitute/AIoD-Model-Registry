@@ -8,7 +8,7 @@ from aiod_registry import ModelManifest
 
 
 def get_jsons():
-    json_dir = Path(__file__).parent.parent / "manifests"
+    json_dir = Path(__file__).parent.parent / "aiod_registry" / "manifests"
     print(json_dir)
     return json_dir.glob("*.json")
 
