@@ -2,7 +2,7 @@ name: Test JSON Manifests
 
 on:
   pull_request:
-    types: [opened, synchronize, reopened, review_requested, edited, closed]
+    types: [opened, reopened, edited]
   push:
     branches: [main]
 
