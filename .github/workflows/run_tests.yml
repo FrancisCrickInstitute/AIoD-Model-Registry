@@ -8,6 +8,7 @@ on:
 
 jobs:
   build:
+    name: JSON Manifest Tests
     runs-on: ubuntu-latest
     strategy:
       matrix:
