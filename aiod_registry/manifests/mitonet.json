@@ -1,25 +1,21 @@
 {
     "name": "Mitonet",
-    "versions": [
-      {
-        "name": "MitoNet v1",
-        "tasks": [
-          {
-            "task": "mito",
+    "versions": {
+      "MitoNet v1": {
+        "tasks": {
+          "mito": {
             "location": "https://zenodo.org/record/6861565/files/MitoNet_v1.pth?download=1"
           }
-        ]
+        }
       },
-      {
-        "name": "MitoNet Mini v1",
-        "tasks": [
-          {
-            "task": "mito",
+      "MitoNet Mini v1": {
+        "tasks": {
+          "mito": {
             "location": "https://zenodo.org/record/6861565/files/MitoNet_v1_mini.pth?download=1"
           }
-        ]
+        }
       }
-    ],
+    },
     "params": [
     {
         "name": "Plane",

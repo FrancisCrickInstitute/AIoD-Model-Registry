@@ -1,58 +1,43 @@
 {
   "name": "Segment Anything",
   "short_name": "sam",
-  "versions": [
-    {
-      "name": "default",
-      "tasks": [
-        {
-          "task": "everything",
-          "location": "https://dl.fbaipublicfiles.com/segment_anything/sam_vit_h_4b8939.pth",
-          "config_path": null
+  "versions": {
+    "default": {
+      "tasks": {
+        "everything": {
+          "location": "https://dl.fbaipublicfiles.com/segment_anything/sam_vit_h_4b8939.pth"
         }
-      ]
+      }
     },
-    {
-      "name": "vit_h",
-      "tasks": [
-        {
-          "task": "everything",
-          "location": "https://dl.fbaipublicfiles.com/segment_anything/sam_vit_h_4b8939.pth",
-          "config_path": null
+    "vit_h": {
+      "tasks": {
+        "everything": {
+          "location": "https://dl.fbaipublicfiles.com/segment_anything/sam_vit_h_4b8939.pth"
         }
-      ]
+      }
     },
-    {
-      "name": "vit_l",
-      "tasks": [
-        {
-          "task": "everything",
-          "location": "https://dl.fbaipublicfiles.com/segment_anything/sam_vit_l_0b3195.pth",
-          "config_path": null
+    "vit_l": {
+      "tasks": {
+        "everything": {
+          "location": "https://dl.fbaipublicfiles.com/segment_anything/sam_vit_l_0b3195.pth"
         }
-      ]
+      }
     },
-    {
-      "name": "vit_b",
-      "tasks": [
-        {
-          "task": "Mito",
-          "location":"https://dl.fbaipublicfiles.com/segment_anything/sam_vit_b_01ec64.pth",
-          "config_path": null
+    "vit_b": {
+      "tasks": {
+        "everything": {
+          "location":"https://dl.fbaipublicfiles.com/segment_anything/sam_vit_b_01ec64.pth"
         }
-      ]
+      }
     },
-    {
-      "name": "MedSAM",
-      "tasks": [
-        {
-          "task": "everything",
-          "location": "https://syncandshare.desy.de/index.php/s/yLfdFbpfEGSHJWY/download/medsam_20230423_vit_b_0.0.1.pth",
-          "config_path": null
+    "MedSAM": {
+      "tasks": {
+        "everything": {
+          "location": "https://syncandshare.desy.de/index.php/s/yLfdFbpfEGSHJWY/download/medsam_20230423_vit_b_0.0.1.pth"
         }
-      ]
+      }
     }
-  ],
+  },
   "params": [
     {
         "name": "Points per side",
