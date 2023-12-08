@@ -27,7 +27,13 @@ ParamName = Annotated[
         description="Name of the parameter. If `arg_name` is not provided, this will be used as the argument name to the underlying model.",
     ),
 ]
-ParamValue = Union[str, int, float, bool, list[Union[str, int, float, bool]]]
+ParamValue = Annotated[
+    Union[str, int, float, bool, list[Union[str, int, float, bool]]],
+    Field(
+        ...,
+        description="Default parameter value. If a list, the parameters will be treated as dropdown choices, where the first is the default. The type of the first element will be used to determine the type of the parameter.",
+    ),
+]
 
 
 def shorten_name(name: str) -> str:
@@ -43,11 +49,20 @@ class ModelParam(StrictModel):
     arg_name: Optional[str] = None
     value: ParamValue
     tooltip: Optional[str] = None
+    _dtype = None
 
     @model_validator(mode="after")
     def create_arg_name(self):
         if self.arg_name is None:
             self.arg_name = self.name
+        return self
+
+    @model_validator(mode="after")
+    def extract_arg_type(self):
+        if isinstance(self.value, list):
+            self._dtype = type(self.value[0])
+        else:
+            self._dtype = type(self.value)
         return self
 
 
