@@ -1,6 +1,6 @@
 {
   "name": "Segment Anything",
-  "arg_name": "sam",
+  "short_name": "sam",
   "versions": {
     "default": {
       "tasks": {
