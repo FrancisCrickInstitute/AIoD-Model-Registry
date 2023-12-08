@@ -1,6 +1,6 @@
 {
   "name": "Segment Anything",
-  "short_name": "sam",
+  "arg_name": "sam",
   "versions": {
     "default": {
       "tasks": {
@@ -41,67 +41,67 @@
   "params": [
     {
         "name": "Points per side",
-        "short_name": "points_per_side",
+        "arg_name": "points_per_side",
         "value": 32,
         "tooltip": ""
     },
     {
         "name": "Points per batch",
-        "short_name": "points_per_batch",
+        "arg_name": "points_per_batch",
         "value": 64,
         "tooltip": ""
     },
     {
         "name": "Pred IoU threshold",
-        "short_name": "pred_iou_thresh",
+        "arg_name": "pred_iou_thresh",
         "value": 0.88,
         "tooltip": ""
     },
     {
         "name": "Stability score threshold",
-        "short_name": "stability_score_thresh",
+        "arg_name": "stability_score_thresh",
         "value": 0.95,
         "tooltip": ""
     },
     {
         "name": "Stability score offset",
-        "short_name": "stability_score_offset",
+        "arg_name": "stability_score_offset",
         "value": 1,
         "tooltip": ""
     },
     {
         "name": "Box nms_thresh",
-        "short_name": "box_nms_thresh",
+        "arg_name": "box_nms_thresh",
         "value": 0.7,
         "tooltip": ""
     },
     {
         "name": "Crop N layers",
-        "short_name": "crop_n_layers",
+        "arg_name": "crop_n_layers",
         "value": 0,
         "tooltip": ""
     },
     {
         "name": "Crop NMS thresh",
-        "short_name": "crop_nms_thresh",
+        "arg_name": "crop_nms_thresh",
         "value": 0.7,
         "tooltip": ""
     },
     {
         "name": "Crop overlap ratio",
-        "short_name": "crop_overlap_ratio",
+        "arg_name": "crop_overlap_ratio",
         "value": 0.34133,
         "tooltip": ""
     },
     {
         "name": "Crop B points downscale factor",
-        "short_name": "crop_n_points_downscale_factor",
+        "arg_name": "crop_n_points_downscale_factor",
         "value": 0.5,
         "tooltip": ""
     },
     {
         "name": "Min mask region area",
-        "short_name": "min_mask_region_area",
+        "arg_name": "min_mask_region_area",
         "value": 3,
         "tooltip": ""
     }

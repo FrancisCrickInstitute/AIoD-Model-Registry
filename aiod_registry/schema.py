@@ -18,7 +18,15 @@ task_names = "|".join(TASK_NAMES.keys())
 # Regex pattern to match task names, ignoring case
 Task = Annotated[str, Field(..., pattern=rf"^(?i:{task_names})$")]
 ModelName = Annotated[str, Field(..., min_length=1, max_length=50)]
-ParamName = Annotated[str, Field(..., min_length=1, max_length=50)]
+ParamName = Annotated[
+    str,
+    Field(
+        ...,
+        min_length=1,
+        max_length=50,
+        description="Name of the parameter. If `arg_name` is not provided, this will be used as the argument name to the underlying model.",
+    ),
+]
 ParamValue = Union[str, int, float, bool, list[Union[str, int, float, bool]]]
 
 
@@ -32,14 +40,14 @@ class StrictModel(BaseModel):
 
 class ModelParam(StrictModel):
     name: ParamName
-    short_name: Optional[str] = None
+    arg_name: Optional[str] = None
     value: ParamValue
     tooltip: Optional[str] = None
 
     @model_validator(mode="after")
-    def create_short_name(self):
-        if self.short_name is None:
-            self.short_name = shorten_name(self.name)
+    def create_arg_name(self):
+        if self.arg_name is None:
+            self.arg_name = self.name
         return self
 
 

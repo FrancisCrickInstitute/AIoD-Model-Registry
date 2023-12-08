@@ -19,47 +19,49 @@
     "params": [
     {
         "name": "Plane",
+        "arg_name": "plane",
         "value": ["XY", "XZ", "YZ", "All"],
         "tooltip": "Whether to use all planes (XY, XZ, YZ) or a single plane"
     },
     {
         "name": "Downsampling",
+        "arg_name": "downsampling",
         "value": [1, 2, 4, 8, 16, 32, 64],
         "tooltip": "Downsampling factor for the input image"
     },
     {
         "name": "Segmentation threshold",
-        "short_name": "conf_threshold",
+        "arg_name": "conf_threshold",
         "value": 0.5,
         "tooltip": "Confidence threshold for the segmentation"
     },
     {
         "name": "Center threshold",
-        "short_name": "center_threshold",
+        "arg_name": "center_threshold",
         "value": 0.1,
         "tooltip": "Confidence threshold for the center"
     },
     {
         "name": "Minimum distance",
-        "short_name": "min_distance",
+        "arg_name": "min_distance",
         "value": 3,
         "tooltip": "Minimum distance between object centers"
     },
     {
         "name": "Maximum objects",
-        "short_name": "max_objects",
+        "arg_name": "max_objects",
         "value": 1000,
         "tooltip": "Maximum number of objects to segment per class"
     },
     {
         "name": "Semantic only",
-        "short_name": "semantic_only",
+        "arg_name": "semantic_only",
         "value": false,
         "tooltip": "Only run semantic segmentation for all classes"
     },
     {
         "name": "Fine boundaries",
-        "short_name": "fine_boundaries",
+        "arg_name": "fine_boundaries",
         "value": false,
         "tooltip": "Finer boundaries between objects"
     }
