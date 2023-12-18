@@ -20,4 +20,7 @@ Install one of the AIoD front-ends or wrappers from:
 Refer to your installed front-end or wrapper.
 
 ## Contribution Guidelines:
-TODO
+See the [contributing page on the Wiki](https://github.com/FrancisCrickInstitute/AIoD-Model-Registry/wiki/Model-Registry#contributing) for the steps necessary on how to contribute a model.
+
+### Local Validation
+To locally test whether a new manifest is eligible, simply run `pytest -v tests/`, where any errors will be detailed by Pydantic.
