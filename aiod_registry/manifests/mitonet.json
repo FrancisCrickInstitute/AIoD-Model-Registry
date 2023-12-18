@@ -1,5 +1,24 @@
 {
     "name": "Mitonet",
+    "metadata": {
+      "description": "MitoNet is a deep learning model for mitochondria segmentation in EM images.",
+      "authors": [
+        {
+          "name": "Ryan Conrad",
+          "affiliation": "Center for Molecular Microscopy, Center for Cancer Research, National Cancer Institute, National Institutes of Health, Bethesda, MD 20892, USA"
+        },
+        {
+          "name": "Kedar Narayan",
+          "affiliation": "Center for Molecular Microscopy, Center for Cancer Research, National Cancer Institute, National Institutes of Health, Bethesda, MD 20892, USA"
+        }
+      ],
+      "pubs": [
+        {
+          "info": "Main paper that describes model & data",
+          "url": "https://doi.org/10.1016/j.cels.2022.12.006"
+        }
+      ]
+    },
     "versions": {
       "MitoNet v1": {
         "tasks": {
