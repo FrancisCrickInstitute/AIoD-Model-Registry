@@ -98,12 +98,49 @@ class ModelVersion(StrictModel):
     tasks: dict[Task, ModelVersionTask]
 
 
+class Author(StrictModel):
+    name: str
+    affiliation: str
+    email: Optional[str] = None
+    url: Optional[AnyUrl] = None
+    github: Optional[str] = None
+    orcid: Optional[str] = None
+
+
+class Publication(StrictModel):
+    info: Annotated[
+        str,
+        Field(
+            ...,
+            description="Information on publication, whether it pertains to the model or the underlying data or something else.",
+        ),
+    ]
+    url: AnyUrl
+    doi: Optional[str] = None
+    authors: Optional[list[Author]] = None
+
+
+class Metadata(StrictModel):
+    description: Annotated[
+        str,
+        Field(
+            ...,
+            description="A short description of the model to provide context.",
+        ),
+    ]
+    authors: Optional[list[Author]] = None
+    pubs: Optional[list[Publication]] = None
+    url: Optional[AnyUrl] = None
+    repo: Optional[AnyUrl] = None
+
+
 class ModelManifest(StrictModel):
     name: str = Field(..., min_length=1, max_length=50)
     short_name: Optional[str] = None
     versions: dict[ModelName, ModelVersion]
     params: Optional[list[ModelParam]] = None
     config: Optional[Path] = None
+    metadata: Metadata
 
     @model_validator(mode="after")
     def create_short_name(self):

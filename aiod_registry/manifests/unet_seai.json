@@ -1,6 +1,9 @@
 {
   "name": "SEAI U-Net",
   "short_name": "seai_unet",
+  "metadata": {
+    "description": "SEAI U-Net developed on internal Crick EM data"
+  },
   "versions": {
     "U-Net": {
       "tasks": {

@@ -1,6 +1,17 @@
 {
   "name": "Segment Anything",
   "short_name": "sam",
+  "metadata": {
+    "description": "Segment Anything is a vision foundation model with flexible prompting.",
+    "url": "https://segment-anything.com/",
+    "repo": "https://github.com/facebookresearch/segment-anything",
+    "pubs": [
+      {
+        "info": "Main paper that describes model & data",
+        "url": "https://arxiv.org/abs/2304.02643"
+      }
+    ]
+  },
   "versions": {
     "default": {
       "tasks": {
