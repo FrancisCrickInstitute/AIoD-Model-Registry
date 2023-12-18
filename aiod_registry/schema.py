@@ -155,3 +155,13 @@ class ModelManifest(StrictModel):
             for task in version.tasks.values():
                 if task.params is None:
                     task.params = self.params
+
+
+if __name__ == "__main__":
+    import json
+
+    schema_fpath = Path(__file__).parent / "schema.json"
+
+    # Write the schema to file
+    with open(schema_fpath, "w") as f:
+        f.write(json.dumps(ModelManifest.model_json_schema(), indent=2))
