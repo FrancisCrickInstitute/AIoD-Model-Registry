@@ -1,0 +1,120 @@
+{
+  "name": "Segment Anything",
+  "short_name": "sam",
+  "metadata": {
+    "description": "Segment Anything is a vision foundation model with flexible prompting.",
+    "url": "https://segment-anything.com/",
+    "repo": "https://github.com/facebookresearch/segment-anything",
+    "pubs": [
+      {
+        "info": "Main paper that describes model & data",
+        "url": "https://arxiv.org/abs/2304.02643"
+      }
+    ]
+  },
+  "versions": {
+    "default": {
+      "tasks": {
+        "everything": {
+          "location": "https://dl.fbaipublicfiles.com/segment_anything/sam_vit_h_4b8939.pth"
+        }
+      }
+    },
+    "vit_h": {
+      "tasks": {
+        "everything": {
+          "location": "https://dl.fbaipublicfiles.com/segment_anything/sam_vit_h_4b8939.pth"
+        }
+      }
+    },
+    "vit_l": {
+      "tasks": {
+        "everything": {
+          "location": "https://dl.fbaipublicfiles.com/segment_anything/sam_vit_l_0b3195.pth"
+        }
+      }
+    },
+    "vit_b": {
+      "tasks": {
+        "everything": {
+          "location":"https://dl.fbaipublicfiles.com/segment_anything/sam_vit_b_01ec64.pth"
+        }
+      }
+    },
+    "MedSAM": {
+      "tasks": {
+        "everything": {
+          "location": "https://syncandshare.desy.de/index.php/s/yLfdFbpfEGSHJWY/download/medsam_20230423_vit_b_0.0.1.pth"
+        }
+      }
+    }
+  },
+  "params": [
+    {
+        "name": "Points per side",
+        "arg_name": "points_per_side",
+        "value": 32,
+        "tooltip": ""
+    },
+    {
+        "name": "Points per batch",
+        "arg_name": "points_per_batch",
+        "value": 64,
+        "tooltip": ""
+    },
+    {
+        "name": "Pred IoU threshold",
+        "arg_name": "pred_iou_thresh",
+        "value": 0.88,
+        "tooltip": ""
+    },
+    {
+        "name": "Stability score threshold",
+        "arg_name": "stability_score_thresh",
+        "value": 0.95,
+        "tooltip": ""
+    },
+    {
+        "name": "Stability score offset",
+        "arg_name": "stability_score_offset",
+        "value": 1,
+        "tooltip": ""
+    },
+    {
+        "name": "Box nms_thresh",
+        "arg_name": "box_nms_thresh",
+        "value": 0.7,
+        "tooltip": ""
+    },
+    {
+        "name": "Crop N layers",
+        "arg_name": "crop_n_layers",
+        "value": 0,
+        "tooltip": ""
+    },
+    {
+        "name": "Crop NMS thresh",
+        "arg_name": "crop_nms_thresh",
+        "value": 0.7,
+        "tooltip": ""
+    },
+    {
+        "name": "Crop overlap ratio",
+        "arg_name": "crop_overlap_ratio",
+        "value": 0.34133,
+        "tooltip": ""
+    },
+    {
+        "name": "Crop B points downscale factor",
+        "arg_name": "crop_n_points_downscale_factor",
+        "value": 0.5,
+        "tooltip": ""
+    },
+    {
+        "name": "Min mask region area",
+        "arg_name": "min_mask_region_area",
+        "value": 3,
+        "tooltip": ""
+    }
+  ]
+}
