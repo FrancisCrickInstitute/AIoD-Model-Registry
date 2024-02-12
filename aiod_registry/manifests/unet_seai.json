@@ -8,8 +8,8 @@
     "U-Net": {
       "tasks": {
         "mito": {
-          "location": "/Users/shandc/Documents/ai_ondemand/mito_5nm_intensity_augs_warp.best.969.pt",
-          "config_path": "/Users/shandc/Documents/ai_ondemand/mito_5nm_intensity_augs_warp.yml"
+          "location": "/nemo/stp/ddt/working/shandc/aiod_models/mito_5nm_intensity_augs_warp.best.969.pt",
+          "config_path": "/nemo/stp/ddt/working/shandc/aiod_models/mito_5nm_intensity_augs_warp.yml"
         }
       }
     },
