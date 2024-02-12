@@ -8,20 +8,20 @@
     "U-Net": {
       "tasks": {
         "mito": {
-          "location": "/nemo/stp/ddt/working/shandc/aiod_models/mito_5nm_intensity_augs_warp.best.969.pt",
-          "config_path": "/nemo/stp/ddt/working/shandc/aiod_models/mito_5nm_intensity_augs_warp.yml"
+          "location": "/nemo/stp/ddt/outputs/aiod_models/mito_5nm_intensity_augs_warp.best.969.pt",
+          "config_path": "/nemo/stp/ddt/outputs/aiod_models/mito_5nm_intensity_augs_warp.yml"
         }
       }
     },
     "Attention U-Net": {
       "tasks": {
         "mito": {
-          "location": "/nemo/stp/ddt/working/shandc/aiod_models/Attention_HUNet_3e5_Adam_restart_12_16.best.1266.pt",
-          "config_path": "/nemo/stp/ddt/working/shandc/aiod_models/Attention_HUNet_3e5_Adam_restart_12_16.yml"
+          "location": "/nemo/stp/ddt/outputs/aiod_models/Attention_HUNet_3e5_Adam_restart_12_16.best.1266.pt",
+          "config_path": "/nemo/stp/ddt/outputs/aiod_models/Attention_HUNet_3e5_Adam_restart_12_16.yml"
         },
         "ne": {
-          "location": "/nemo/stp/ddt/working/shandc/aiod_models/Attention_HUNet_NE.best.368.pt",
-          "config_path": "/nemo/stp/ddt/working/shandc/aiod_models/Attention_HUNet_NE.yml"
+          "location": "/nemo/stp/ddt/outputs/aiod_models/Attention_HUNet_NE.best.368.pt",
+          "config_path": "/nemo/stp/ddt/outputs/aiod_models/Attention_HUNet_NE.yml"
         }
       }
     }
