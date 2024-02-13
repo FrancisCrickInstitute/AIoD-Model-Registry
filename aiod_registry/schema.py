@@ -108,6 +108,7 @@ class Author(StrictModel):
 
 
 class Publication(StrictModel):
+    title: str
     info: Annotated[
         str,
         Field(
@@ -116,6 +117,7 @@ class Publication(StrictModel):
         ),
     ]
     url: AnyUrl
+    year: Optional[int] = None
     doi: Optional[str] = None
     authors: Optional[list[Author]] = None
 

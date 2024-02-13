@@ -2,7 +2,21 @@
   "name": "SEAI U-Net",
   "short_name": "seai_unet",
   "metadata": {
-    "description": "SEAI U-Net developed on internal Crick EM data"
+    "description": "SEAI U-Net developed on internal Crick EM data",
+    "pubs": [
+      {
+        "title": "Deep learning for automatic segmentation of the nuclear envelope in electron microscopy data, trained with volunteer segmentations",
+        "year": 2021,
+        "url": "https://doi.org/10.1111/tra.12789",
+        "info": "Main Etch-a-Cell journal paper on NE model"
+      },
+      {
+        "title": "Automatic instance segmentation of mitochondria in electron microscopy data",
+        "year": 2021,
+        "url": "https://doi.org/10.1101/2021.05.24.444785",
+        "info": "Shorter ISBI MitoEM paper on model"
+      }
+    ]
   },
   "versions": {
     "U-Net": {

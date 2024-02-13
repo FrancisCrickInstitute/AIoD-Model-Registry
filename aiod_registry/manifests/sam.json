@@ -8,7 +8,59 @@
     "pubs": [
       {
         "info": "Main paper that describes model & data",
-        "url": "https://arxiv.org/abs/2304.02643"
+        "url": "https://arxiv.org/abs/2304.02643",
+        "title": "Segment Anything",
+        "doi": "10.48550/arXiv.2304.02643",
+        "authors": [
+          {
+            "name": "Alexander Kirillov",
+            "affiliation": "Meta AI Research, FAIR"
+          },
+          {
+            "name": "Eric Mintun",
+            "affiliation": "Meta AI Research, FAIR"
+          },
+          {
+            "name": "Nikhila Ravi",
+            "affiliation": "Meta AI Research, FAIR"
+          },
+          {
+            "name": "Hanzi Mao",
+            "affiliation": "Meta AI Research, FAIR"
+          },
+          {
+            "name": "Chloe Rolland",
+            "affiliation": "Meta AI Research, FAIR"
+          },
+          {
+            "name": "Laura Gustafson",
+            "affiliation": "Meta AI Research, FAIR"
+          },
+          {
+            "name": "Tete Xiao",
+            "affiliation": "Meta AI Research, FAIR"
+          },
+          {
+            "name": "Spencer Whitehead",
+            "affiliation": "Meta AI Research, FAIR"
+          },
+          {
+            "name": "Alexander C. Berg",
+            "affiliation": "Meta AI Research, FAIR"
+          },
+          {
+            "name": "Wan-Yen Lo",
+            "affiliation": "Meta AI Research, FAIR"
+          },
+          {
+            "name": "Piotr Dollár",
+            "affiliation": "Meta AI Research, FAIR"
+          },
+          {
+            "name": "Ross Girshick",
+            "affiliation": "Meta AI Research, FAIR"
+          }
+        ]
       }
     ]
   },
