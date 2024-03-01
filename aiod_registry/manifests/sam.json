@@ -107,6 +107,7 @@
         "repo": "https://github.com/computational-cell-analytics/micro-sam",
         "pubs": [
           {
+            "title": "Segment Anything for Microscopy",
             "info": "Segment Anything for Microscopy paper",
             "url": "https://doi.org/10.1101/2023.08.21.554208"
           }
@@ -125,6 +126,7 @@
         "repo": "https://github.com/computational-cell-analytics/micro-sam",
         "pubs": [
           {
+            "title": "Segment Anything for Microscopy",
             "info": "Segment Anything for Microscopy paper",
             "url": "https://doi.org/10.1101/2023.08.21.554208"
           }
