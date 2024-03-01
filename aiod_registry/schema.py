@@ -66,38 +66,6 @@ class ModelParam(StrictModel):
         return self
 
 
-class ModelVersionTask(StrictModel):
-    location: str = Field(
-        ...,
-        description="Either a url or a filepath (will be skipped if the path does not exist/cannot be read!)",
-    )
-    config_path: Optional[Union[Path, str]] = None
-    params: Optional[list[ModelParam]] = None
-    location_type: Optional[str] = None
-
-    @model_validator(mode="after")
-    def get_location_type(self):
-        # Skip if provided
-        if self.location_type is not None:
-            return self
-        # Otherwise, determine the type
-        res = urlparse(self.location)
-        if res.scheme in ("http", "https"):
-            self.location_type = "url"
-        elif res.scheme in ("file", ""):
-            self.location_type = "file"
-        else:
-            # NOTE: Because of including "" above, it is unlikely this will be reached
-            raise TypeError(
-                f"Cannot determine type (file/url) of location: {self.location}!"
-            )
-        return self
-
-
-class ModelVersion(StrictModel):
-    tasks: dict[Task, ModelVersionTask]
-
-
 class Author(StrictModel):
     name: str
     affiliation: str
@@ -134,6 +102,40 @@ class Metadata(StrictModel):
     pubs: Optional[list[Publication]] = None
     url: Optional[AnyUrl] = None
     repo: Optional[AnyUrl] = None
+
+
+class ModelVersionTask(StrictModel):
+    location: str = Field(
+        ...,
+        description="Either a url or a filepath (will be skipped if the path does not exist/cannot be read!)",
+    )
+    config_path: Optional[Union[Path, str]] = None
+    params: Optional[list[ModelParam]] = None
+    location_type: Optional[str] = None
+    metadata: Optional[Metadata] = None
+
+    @model_validator(mode="after")
+    def get_location_type(self):
+        # Skip if provided
+        if self.location_type is not None:
+            return self
+        # Otherwise, determine the type
+        res = urlparse(self.location)
+        if res.scheme in ("http", "https"):
+            self.location_type = "url"
+        elif res.scheme in ("file", ""):
+            self.location_type = "file"
+        else:
+            # NOTE: Because of including "" above, it is unlikely this will be reached
+            raise TypeError(
+                f"Cannot determine type (file/url) of location: {self.location}!"
+            )
+        return self
+
+
+class ModelVersion(StrictModel):
+    tasks: dict[Task, ModelVersionTask]
+    metadata: Optional[Metadata] = None
 
 
 class ModelManifest(StrictModel):

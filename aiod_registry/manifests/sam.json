@@ -99,6 +99,42 @@
           "location": "https://syncandshare.desy.de/index.php/s/yLfdFbpfEGSHJWY/download/medsam_20230423_vit_b_0.0.1.pth"
         }
       }
+    },
+    "MicroSAM-Boundaries": {
+      "metadata": {
+        "description": "Segment Anything for Microscopy finetuned models (for)",
+        "url": "https://computational-cell-analytics.github.io/micro-sam/micro_sam.html",
+        "repo": "https://github.com/computational-cell-analytics/micro-sam",
+        "pubs": [
+          {
+            "info": "Segment Anything for Microscopy paper",
+            "url": "https://doi.org/10.1101/2023.08.21.554208"
+          }
+        ]
+      },
+      "tasks": {
+        "everything": {
+          "location": "https://zenodo.org/records/10524894/files/vit_b_em_boundaries.pth?download=1"
+        }
+      }
+    },
+    "MicroSAM-Organelles": {
+      "metadata": {
+        "description": "Segment Anything for Microscopy finetuned models (for)",
+        "url": "https://computational-cell-analytics.github.io/micro-sam/micro_sam.html",
+        "repo": "https://github.com/computational-cell-analytics/micro-sam",
+        "pubs": [
+          {
+            "info": "Segment Anything for Microscopy paper",
+            "url": "https://doi.org/10.1101/2023.08.21.554208"
+          }
+        ]
+      },
+      "tasks": {
+        "everything": {
+          "location": "https://zenodo.org/records/10524828/files/vit_b_em_organelles.pth?download=1"
+        }
+      }
     }
   },
   "params": [
