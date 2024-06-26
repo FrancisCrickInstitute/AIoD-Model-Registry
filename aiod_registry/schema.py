@@ -36,6 +36,16 @@ ParamValue = Annotated[
 ]
 
 
+def print_attr(attr, br: bool = True):
+    "Shorthand to print something in brackets or not, only if not None."
+    if attr is None:
+        return ""
+    if br:
+        return f"({attr})"
+    else:
+        return f"{attr}"
+
+
 def shorten_name(name: str) -> str:
     return "_".join(name.lower().split(" "))
 
@@ -102,6 +112,26 @@ class Metadata(StrictModel):
     pubs: Optional[list[Publication]] = None
     url: Optional[AnyUrl] = None
     repo: Optional[AnyUrl] = None
+
+    def __str__(self):
+        misc_info = (
+            f"{'URL: ' + print_attr(self.url, br=False) if self.url is not None else ''}\n"
+            f"{'Repo: ' + print_attr(self.repo, br=False) if self.repo is not None else ''}\n"
+        )
+
+        if self.pubs is None:
+            all_pubs = ""
+        else:
+            all_pubs = "\nPublications:\n" + "\n-".join(
+                [
+                    (
+                        f"{pub.title} {print_attr(pub.year)}- {pub.url}"
+                        f"{', DOI: ' + print_attr(pub.doi, br=False) if pub.doi is not None else ''}\n"
+                    )
+                    for pub in self.pubs
+                ]
+            )
+        return f"Description: {self.description}\n{misc_info if len(misc_info) > 0 else ''}{all_pubs}"
 
 
 class ModelVersionTask(StrictModel):
