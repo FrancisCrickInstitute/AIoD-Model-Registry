@@ -7,7 +7,7 @@ import pytest
 from aiod_registry import ModelManifest, get_manifest_paths
 
 
-@pytest.mark.parametrize("json_path", get_manifest_paths())
+@pytest.mark.parametrize("json_path", get_manifest_paths(), ids=lambda x: Path(x).name)
 def test_manifest(json_path):
     with open(json_path, "r") as f:
         json_manifest = json.load(f)
