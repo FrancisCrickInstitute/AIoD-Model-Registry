@@ -34,6 +34,14 @@ ParamValue = Annotated[
         description="Default parameter value. If a list, the parameters will be treated as dropdown choices, where the first is the default. The type of the first element will be used to determine the type of the parameter.",
     ),
 ]
+Usage = Annotated[
+    Union[str, Path, AnyUrl],
+    Field(
+        ...,
+        title="Usage Guide",
+        description="A path to a file, a URL, or a string containing the usage guide for the model.",
+    ),
+]
 
 
 def print_attr(attr, br: bool = True):
@@ -175,6 +183,7 @@ class ModelManifest(StrictModel):
     params: Optional[list[ModelParam]] = None
     config: Optional[Path] = None
     metadata: Metadata
+    usage_guide: Optional[Usage] = None
 
     @model_validator(mode="after")
     def create_short_name(self):
