@@ -1,6 +1,7 @@
 {
   "name": "Segment Anything",
   "short_name": "sam",
+  "usage_guide": "Please refer to the tooltips to provide an indication of how to adjust parameters to change the output. Given SAM is a 2D model, it is advised to first run SAM on a few representative slices and adjust parameters to get the desired output before running on the full volume. Postprocessing (i.e. relabelling) can take a while, so only enable this when suitable parameters have been found.",
   "metadata": {
     "description": "Segment Anything is a vision foundation model with flexible prompting.",
     "url": "https://segment-anything.com/",
@@ -144,67 +145,67 @@
         "name": "Points per side",
         "arg_name": "points_per_side",
         "value": 32,
-        "tooltip": ""
+        "tooltip": "Number of point prompts per side, controlling density of point grid. Higher values will capture more objects (rightly or wrongly), but take longer to run."
     },
     {
         "name": "Points per batch",
         "arg_name": "points_per_batch",
         "value": 64,
-        "tooltip": ""
+        "tooltip": "Number of points to process per batch. Higher values will be faster but will require more (GPU) memory."
     },
     {
         "name": "Pred IoU threshold",
         "arg_name": "pred_iou_thresh",
         "value": 0.88,
-        "tooltip": ""
+        "tooltip": "Threshold (range [0,1]) for model-predicted IoU, for filtering out low-confidence masks. Higher values will remove more masks."
     },
     {
         "name": "Stability score threshold",
         "arg_name": "stability_score_thresh",
         "value": 0.95,
-        "tooltip": ""
+        "tooltip": "Threshold (range [0,1]) for mask stability score. Higher values will remove more masks, in conjunction with stability score offset that controls level of stability measured."
     },
     {
         "name": "Stability score offset",
         "arg_name": "stability_score_offset",
-        "value": 1,
-        "tooltip": ""
+        "value": 1.0,
+        "tooltip": "Amount to shift the cutoff for stability score. Higher values will remove less stable masks."
     },
     {
-        "name": "Box nms_thresh",
+        "name": "Box NMS IoU threshold",
         "arg_name": "box_nms_thresh",
         "value": 0.7,
-        "tooltip": ""
+        "tooltip": "The IoU threshold (range [0,1]) for non-maximum suppression of boxes. Lower values will merge more masks, useful to reduce mask 'halos' and speed-up postprocessing, but could lead to undersegmentation/agglomeration."
     },
     {
         "name": "Crop N layers",
         "arg_name": "crop_n_layers",
         "value": 0,
-        "tooltip": ""
+        "tooltip": "Values >0 will crop the image into N layers, which will be processed separately, giving more detail but taking longer. Each deeper layer will have more crops (2^N). Balance number of point prompts with 'Crop N points downscale factor'."
     },
     {
-        "name": "Crop NMS thresh",
+        "name": "Crop NMS IoU threshold",
         "arg_name": "crop_nms_thresh",
         "value": 0.7,
-        "tooltip": ""
+        "tooltip": "Same as Box NMS IoU threshold, but for each crop."
     },
     {
         "name": "Crop overlap ratio",
         "arg_name": "crop_overlap_ratio",
         "value": 0.34133,
-        "tooltip": ""
+        "tooltip": "The amount which crops overlap. Higher values may help identify more objects, but duplicates computation."
     },
     {
-        "name": "Crop B points downscale factor",
+        "name": "Crop N points downscale factor",
         "arg_name": "crop_n_points_downscale_factor",
-        "value": 0.5,
-        "tooltip": ""
+        "value": 1,
+        "tooltip": "Value to be raised to the power of the crop layer will be used to scale down number of points per side in each crop. Higher values will reduce point grid density in deeper layers."
     },
     {
         "name": "Min mask region area",
         "arg_name": "min_mask_region_area",
         "value": 3,
-        "tooltip": ""
+        "tooltip": "Size (in pixels) of masks to remove if identified as a disconnected region or hole."
     }
   ]
 }
