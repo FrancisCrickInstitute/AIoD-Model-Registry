@@ -5,6 +5,7 @@ from urllib.parse import urlparse
 from pydantic import BaseModel, ConfigDict, Field, model_validator, AnyUrl
 from typing_extensions import Annotated
 
+
 TASK_NAMES = {
     "mito": "Mitochondria",
     "er": "Endoplasmic Reticulum",
@@ -143,31 +144,48 @@ class Metadata(StrictModel):
 
 
 class ModelVersionTask(StrictModel):
-    location: str = Field(
+    location: Union[str, list[str]] = Field(
         ...,
-        description="Either a url or a filepath (will be skipped if the path does not exist/cannot be read!)",
+        description="A url or a filepath, or list of alternative locations (skipped if location does not exist/cannot be read!)",
     )
-    config_path: Optional[Union[Path, str]] = None
+    config_path: Optional[Union[str, list[str]]] = None
     params: Optional[list[ModelParam]] = None
-    location_type: Optional[str] = None
+    location_type: Optional[Union[str, list[str]]] = None
     metadata: Optional[Metadata] = None
 
     @model_validator(mode="after")
     def get_location_type(self):
         # Skip if provided
         if self.location_type is not None:
+            # If a single location, convert to list
+            if isinstance(self.location_type, str):
+                self.location_type = [self.location_type]
             return self
         # Otherwise, determine the type
-        res = urlparse(self.location)
-        if res.scheme in ("http", "https"):
-            self.location_type = "url"
-        elif res.scheme in ("file", ""):
-            self.location_type = "file"
-        else:
-            # NOTE: Because of including "" above, it is unlikely this will be reached
-            raise TypeError(
-                f"Cannot determine type (file/url) of location: {self.location}!"
-            )
+        if not isinstance(self.location, list):
+            self.location = [self.location]
+        # Create a list to store the type of location
+        self.location_type = []
+        # Determine the type of location
+        for loc in self.location:
+            res = urlparse(loc)
+            if res.scheme in ("http", "https"):
+                self.location_type.append("url")
+            elif res.scheme in ("file", ""):
+                self.location_type.append("file")
+            else:
+                # NOTE: Because of including "" above, it is unlikely this will be reached
+                raise TypeError(
+                    f"Cannot determine type (file/url) of location: {self.location}!"
+                )
+        return self
+
+    @model_validator(mode="after")
+    def get_config_path(self):
+        if self.config_path is None:
+            self.config_path = [None] * len(self.location)
+        elif not isinstance(self.config_path, list):
+            self.config_path = [self.config_path]
         return self
 
 
