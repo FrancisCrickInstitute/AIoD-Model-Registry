@@ -45,7 +45,21 @@ def load_manifests(
             # Loop through the versions and tasks and remove inaccessible ones
             for v_name, version in manifest.versions.items():
                 for task_name, task in version.tasks.items():
-                    if not is_accessible(task.location):
+                    # Check model config path
+                    for loc in task.config_path:
+                        if is_accessible(loc):
+                            task.config_path = loc
+                            break
+                    else:
+                        task.config_path = None
+                    # Check which location is accessible
+                    for loc in task.location:
+                        if is_accessible(loc):
+                            # Store the first accessible location
+                            task.location = loc
+                            break
+                    # If no location is accessible, remove the task completely
+                    else:
                         del new_manifest.versions[v_name].tasks[task_name]
                         changed = True
                         num_versions_removed += 1
