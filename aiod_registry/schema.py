@@ -161,7 +161,6 @@ class ModelVersionTask(StrictModel):
             if isinstance(self.location_type, str):
                 self.location_type = [self.location_type]
             return self
-        # Otherwise, determine the type
         if not isinstance(self.location, list):
             self.location = [self.location]
         # Create a list to store the type of location

@@ -45,18 +45,26 @@ def load_manifests(
             # Loop through the versions and tasks and remove inaccessible ones
             for v_name, version in manifest.versions.items():
                 for task_name, task in version.tasks.items():
-                    # Check model config path
-                    for loc in task.config_path:
-                        if is_accessible(loc):
-                            task.config_path = loc
+                    # Check model config path and flatten
+                    for fpath in task.config_path:
+                        if is_accessible(fpath):
+                            res = fpath
                             break
                     else:
-                        task.config_path = None
-                    # Check which location is accessible
-                    for loc in task.location:
+                        res = None
+                    new_manifest.versions[v_name].tasks[task_name].config_path = res
+                    # Check which location is accessible and flatten
+                    for i, loc in enumerate(task.location):
                         if is_accessible(loc):
                             # Store the first accessible location
-                            task.location = loc
+                            new_manifest.versions[v_name].tasks[
+                                task_name
+                            ].location = loc
+                            # Flatten the related location type
+                            new_manifest.versions[v_name].tasks[
+                                task_name
+                            ].location_type = task.location_type[i]
+                            # NOTE: Not including config path here in case not paired order
                             break
                     # If no location is accessible, remove the task completely
                     else:
@@ -92,6 +100,7 @@ def load_manifests(
                 )
             return new_manifests
         else:
-            return manifests
+            # NOTE: Locations etc. at least get flattened
+            return new_manifests
     else:
         return manifests
