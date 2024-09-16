@@ -205,7 +205,13 @@
         "name": "Min mask region area",
         "arg_name": "min_mask_region_area",
         "value": 3,
-        "tooltip": "Size (in pixels) of masks to remove if identified as a disconnected region or hole."
+        "tooltip": "Size (in pixels) of masks to remove if identified as a disconnected region or hole. 0 will not remove any masks."
+    },
+    {
+        "name": "Max mask region area",
+        "arg_name": "max_mask_region_area",
+        "value": 0,
+        "tooltip": "Size (in pixels) of masks to remove if at least this size. 0 will not remove any masks."
     }
   ]
 }
