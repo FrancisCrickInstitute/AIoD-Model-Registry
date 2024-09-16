@@ -82,6 +82,19 @@ class ModelParam(StrictModel):
             self._dtype = type(self.value[0])
         else:
             self._dtype = type(self.value)
+        # If None, we need a dtype to poss cast to when dealing with GUIs
+        if self.value is None:
+            if self.dtype is None:
+                raise ValueError(
+                    f"Parameter {self.name} needs a dtype if default value is None!"
+                )
+            else:
+                if getattr(builtins, self.dtype, None) is None:
+                    raise ValueError(
+                        f"Parameter {self.name} has an invalid dtype ({self.dtype})!"
+                    )
+        else:
+            self.dtype = self._dtype
         return self
 
 
