@@ -12,6 +12,8 @@ TASK_NAMES = {
     "er": "Endoplasmic Reticulum",
     "ne": "Nuclear Envelope",
     "everything": "Everything!",
+    "nuclei": "Nuclei",
+    "cyto": "Cytoplasm",
 }
 task_names = "|".join(TASK_NAMES.keys())
 
