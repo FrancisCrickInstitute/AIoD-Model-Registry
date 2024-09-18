@@ -1,3 +1,4 @@
+import builtins
 from pathlib import Path
 from typing import Optional, Union
 from urllib.parse import urlparse
@@ -29,7 +30,7 @@ ParamName = Annotated[
     ),
 ]
 ParamValue = Annotated[
-    Union[str, int, float, bool, list[Union[str, int, float, bool]]],
+    Union[str, int, float, bool, None, list[Union[str, int, float, bool]]],
     Field(
         ...,
         description="Default parameter value. If a list, the parameters will be treated as dropdown choices, where the first is the default. The type of the first element will be used to determine the type of the parameter.",
@@ -68,7 +69,8 @@ class ModelParam(StrictModel):
     arg_name: Optional[str] = None
     value: ParamValue
     tooltip: Optional[str] = None
-    _dtype = None
+    dtype: Optional[str] = None  # Used of default value is None
+    _dtype = None  # Determined from value if given
 
     @model_validator(mode="after")
     def create_arg_name(self):
