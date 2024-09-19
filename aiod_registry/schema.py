@@ -232,6 +232,7 @@ class ModelManifest(StrictModel):
             for task in version.tasks.values():
                 if task.params is None:
                     task.params = self.params
+        return self
 
 
 if __name__ == "__main__":
