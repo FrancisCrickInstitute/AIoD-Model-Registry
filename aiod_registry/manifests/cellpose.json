@@ -1,0 +1,180 @@
+{
+  "name": "Cellpose",
+  "short_name": "cellpose",
+  "metadata": {
+    "description": "Cellpose is a generalist model for cell and nucleus segmentation.",
+    "url": "https://cellpose.readthedocs.io/en/latest/",
+    "repo": "https://github.com/MouseLand/cellpose",
+    "pubs": [
+      {
+        "info": "Cellpose v1",
+        "url": "https://doi.org/10.1038/s41592-020-01018-x",
+        "title": "Cellpose: a generalist algorithm for cellular segmentation",
+        "doi": "10.1038/s41592-020-01018-x",
+        "authors": [
+          {
+            "name": "Carsen Stringer",
+            "affiliation": "HHMI Janelia Research Campus, Ashburn, VA, USA"
+          },
+          {
+            "name": "Tim Wang",
+            "affiliation": "HHMI Janelia Research Campus, Ashburn, VA, USA"
+          },
+          {
+            "name": "Michalis Michaelos",
+            "affiliation": "HHMI Janelia Research Campus, Ashburn, VA, USA"
+          },
+          {
+            "name": "Marius Pachitariu",
+            "affiliation": "HHMI Janelia Research Campus, Ashburn, VA, USA"
+          }
+        ]
+      },
+      {
+        "info": "Cellpose v2",
+        "url": "https://doi.org/10.1038/s41592-022-01663-4",
+        "title": "Cellpose 2.0: how to train your own model",
+        "doi": "10.1038/s41592-022-01663-4",
+        "authors": [
+          {
+            "name": "Marius Pachitariu",
+            "affiliation": "HHMI Janelia Research Campus, Ashburn, VA, USA"
+          },
+          {
+            "name": "Carsen Stringer",
+            "affiliation": "HHMI Janelia Research Campus, Ashburn, VA, USA"
+          }
+        ]
+      },
+      {
+        "info": "Cellpose v3",
+        "url": "https://www.biorxiv.org/content/10.1101/2024.02.10.579780v2",
+        "title": "Cellpose3: one-click image restoration for improved cellular segmentation",
+        "doi": "10.1101/2024.02.10.579780",
+        "authors": [
+          {
+            "name": "Carsen Stringer",
+            "affiliation": "HHMI Janelia Research Campus, Ashburn, VA, USA"
+          },
+          {
+            "name": "Marius Pachitariu",
+            "affiliation": "HHMI Janelia Research Campus, Ashburn, VA, USA"
+          }
+        ]
+      }
+    ]
+  },
+  "versions": {
+    "cyto3": {
+      "tasks": {
+        "cyto": {
+          "location":"https://www.cellpose.org/models/cyto3"
+        }
+      }
+    },
+    "nuclei": {
+      "tasks": {
+        "nuclei": {
+          "location": "https://www.cellpose.org/models/nucleitorch_0"
+        }
+      }
+    },
+    "cyto1": {
+      "tasks": {
+        "cyto": {
+          "location": "https://www.cellpose.org/models/cytotorch_0"
+        }
+      }
+    },
+    "cyto2": {
+      "tasks": {
+        "cyto": {
+          "location":"https://www.cellpose.org/models/cyto2torch_0"
+        }
+      }
+    }
+  },
+  "params": [
+    {
+        "name": "Diameter",
+        "arg_name": "diameter",
+        "value": 0,
+        "tooltip": "Diameter of the cells in pixels. If None or 0, Cellpose will try to estimate it. Setting the value may improve results. See https://cellpose.readthedocs.io/en/latest/settings.html#diameter for details."
+    },
+    {
+        "name": "Segment Channel",
+        "arg_name": "segment_channel",
+        "value": 0,
+        "tooltip": "What channel to segment on. 0=grayscale, 1=red, 2=green, 3=blue. See https://cellpose.readthedocs.io/en/latest/settings.html#channels for details."
+    },
+    {
+        "name": "Nucleus Channel",
+        "arg_name": "nucleus_channel",
+        "value": 0,
+        "tooltip": "What channel contains nucleus. 0=grayscale, 1=red, 2=green, 3=blue. Unused for 'nuclei' model, where nuclei are in the segment channel. See https://cellpose.readthedocs.io/en/latest/settings.html#channels for details."
+    },
+    {
+        "name": "3D Segmentation",
+        "arg_name": "do_3D",
+        "value": false,
+        "tooltip": "Whether to do 3D segmentation. If True, will try to segment in 3D (XY, XZ, YZ). If False, will segment in 2D and combine with stitch_threshold."
+    },
+    {
+        "name": "Stitch Threshold",
+        "arg_name": "stitch_threshold",
+        "value": 0.0,
+        "tooltip": "Threshold for stitching 2D segmentations together. Value is the IoU that constitutes an overlap and thus merge. Only used if do_3D is False and >0."
+    },
+    {
+        "name": "Cellprob Threshold",
+        "arg_name": "cellprob_threshold",
+        "value": 0.0,
+        "tooltip": "Threshold for flows to determine ROIs. Decrease to find more & larger ROIs, increase if too many ROIs (esp. in dim regions). See https://cellpose.readthedocs.io/en/latest/settings.html#cellprob-threshold for details."
+    },
+    {
+        "name": "Flow Threshold",
+        "arg_name": "flow_threshold",
+        "value": 0.4,
+        "tooltip": "Threshold for flows to determine ROIs. Not used for 3D. See https://cellpose.readthedocs.io/en/latest/settings.html#cellprob-threshold for details."
+    },
+    {
+        "name": "Num Iterations",
+        "arg_name": "niter",
+        "value": 0,
+        "tooltip": "Number of iterations to simulate dynamics for. By default (0/None), proportional to ROI diameter. See https://cellpose.readthedocs.io/en/latest/settings.html#number-of-iterations-niter for details."
+    },
+    {
+        "name": "Anisotropy",
+        "arg_name": "anisotropy",
+        "value": null,
+        "dtype": "float",
+        "tooltip": "Optional rescaling factor for Z (e.g. set to 2.0 if Z is sampled half as dense as X or Y)."
+    },
+    {
+        "name": "Channel axis",
+        "arg_name": "channel_axis",
+        "value": null,
+        "dtype": "int",
+        "tooltip": "Set the axis where channels are stored. 'None' means it tries to figure it out - useful if no/poor metadata and not loading properly."
+    },
+    {
+        "name": "Z axis",
+        "arg_name": "z_axis",
+        "value": null,
+        "dtype": "int",
+        "tooltip": "Set the axis where Z slices are stored. 'None' means it tries to figure it out - useful if no/poor metadata and not loading properly."
+    },
+    {
+        "name": "Batch size",
+        "arg_name": "batch_size",
+        "value": 64,
+        "tooltip": "Number of 224x224 patches to run simultaneously on the GPU. Can make smaller or bigger depending on GPU memory usage."
+    },
+    {
+        "name": "Minimum size",
+        "arg_name": "min_size",
+        "value": 15,
+        "tooltip": "Size (in pixels) of ROIs/to remove if lower. 0 will not remove any masks."
+    }
+  ]
+}
