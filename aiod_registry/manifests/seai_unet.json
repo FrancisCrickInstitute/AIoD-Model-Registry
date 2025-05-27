@@ -36,6 +36,10 @@
         "ne": {
           "location": ["/nemo/stp/ddt/outputs/aiod_models/Attention_HUNet_NE.best.368.pt", "/media/DATA/aiod_models/Attention_HUNet_NE.best.368.pt"],
           "config_path": ["/nemo/stp/ddt/outputs/aiod_models/Attention_HUNet_NE.yml", "/media/DATA/aiod_models/Attention_HUNet_NE.yml"]
+        },
+        "er": {
+          "location": ["/nemo/stp/ddt/outputs/carltonj/er_model/lr_0_00001.best.873.pt"],
+          "config_path": ["/nemo/stp/ddt/outputs/carltonj/er_model/er.yml"]
         }
       }
     }
