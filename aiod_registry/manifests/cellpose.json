@@ -3,7 +3,7 @@
   "short_name": "cellpose",
   "metadata": {
     "description": "Cellpose is a generalist model for cell and nucleus segmentation.",
-    "url": "https://cellpose.readthedocs.io/en/latest/",
+    "url": "https://cellpose.readthedocs.io/en/v3.1.1.1/",
     "repo": "https://github.com/MouseLand/cellpose",
     "pubs": [
       {
@@ -99,19 +99,19 @@
         "name": "Diameter",
         "arg_name": "diameter",
         "value": 0,
-        "tooltip": "Diameter of the cells in pixels. If None or 0, Cellpose will try to estimate it. Setting the value may improve results. See https://cellpose.readthedocs.io/en/latest/settings.html#diameter for details."
+        "tooltip": "Diameter of the cells in pixels. If None or 0, Cellpose will try to estimate it. Setting the value may improve results. See https://cellpose.readthedocs.io/en/v3.1.1.1/settings.html#diameter for details."
     },
     {
         "name": "Segment Channel",
         "arg_name": "segment_channel",
         "value": 0,
-        "tooltip": "What channel to segment on. 0=grayscale, 1=red, 2=green, 3=blue. See https://cellpose.readthedocs.io/en/latest/settings.html#channels for details."
+        "tooltip": "What channel to segment on. 0=grayscale, 1=red, 2=green, 3=blue. See https://cellpose.readthedocs.io/en/v3.1.1.1/settings.html#channels for details."
     },
     {
         "name": "Nucleus Channel",
         "arg_name": "nucleus_channel",
         "value": 0,
-        "tooltip": "What channel contains nucleus. 0=grayscale, 1=red, 2=green, 3=blue. Unused for 'nuclei' model, where nuclei are in the segment channel. See https://cellpose.readthedocs.io/en/latest/settings.html#channels for details."
+        "tooltip": "What channel contains nucleus. 0=grayscale, 1=red, 2=green, 3=blue. Unused for 'nuclei' model, where nuclei are in the segment channel. See https://cellpose.readthedocs.io/en/v3.1.1.1/settings.html#channels for details."
     },
     {
         "name": "3D Segmentation",
@@ -129,19 +129,19 @@
         "name": "Cellprob Threshold",
         "arg_name": "cellprob_threshold",
         "value": 0.0,
-        "tooltip": "Threshold for flows to determine ROIs. Decrease to find more & larger ROIs, increase if too many ROIs (esp. in dim regions). See https://cellpose.readthedocs.io/en/latest/settings.html#cellprob-threshold for details."
+        "tooltip": "Threshold for flows to determine ROIs. Decrease to find more & larger ROIs, increase if too many ROIs (esp. in dim regions). See https://cellpose.readthedocs.io/en/v3.1.1.1/settings.html#cellprob-threshold for details."
     },
     {
         "name": "Flow Threshold",
         "arg_name": "flow_threshold",
         "value": 0.4,
-        "tooltip": "Threshold for flows to determine ROIs. Not used for 3D. See https://cellpose.readthedocs.io/en/latest/settings.html#cellprob-threshold for details."
+        "tooltip": "Threshold for flows to determine ROIs. Not used for 3D. See https://cellpose.readthedocs.io/en/v3.1.1.1/settings.html#cellprob-threshold for details."
     },
     {
         "name": "Num Iterations",
         "arg_name": "niter",
         "value": 0,
-        "tooltip": "Number of iterations to simulate dynamics for. By default (0/None), proportional to ROI diameter. See https://cellpose.readthedocs.io/en/latest/settings.html#number-of-iterations-niter for details."
+        "tooltip": "Number of iterations to simulate dynamics for. By default (0/None), proportional to ROI diameter. See https://cellpose.readthedocs.io/en/v3.1.1.1/settings.html#number-of-iterations-niter for details."
     },
     {
         "name": "Anisotropy",
