@@ -148,7 +148,7 @@
         "arg_name": "anisotropy",
         "value": null,
         "dtype": "float",
-        "tooltip": "Optional rescaling factor for Z (e.g. set to 2.0 if Z is sampled half as dense as X or Y)."
+        "tooltip": "Optional rescaling factor for Z (e.g. set to 2.0 if Z is sampled half as dense as X or Y). Only used if do_3D is True."
     },
     {
         "name": "Channel axis",
