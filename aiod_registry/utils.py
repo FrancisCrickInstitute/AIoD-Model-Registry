@@ -11,7 +11,9 @@ def get_manifest_paths():
     return json_dir.glob("*.json")
 
 
-def is_accessible(location: str) -> bool:
+def is_accessible(location: str | None) -> bool:
+    if location is None:
+        return False
     res = urlparse(location)
     if res.scheme in ("file", ""):
         return Path(res.path).exists()
