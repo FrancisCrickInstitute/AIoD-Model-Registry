@@ -136,6 +136,37 @@ def test_filter_location_and_empty_manifests_on_raw(temp_manifest_file):
     assert filtered.short_name in filtered_dict
 
 
+def test_filter_location_no_change(tmp_path):
+    # Manifest with all accessible locations (URLs)
+    manifest_data = {
+        "name": "TestModel",
+        "short_name": "testmodel",
+        "metadata": {
+            "description": "Test model with all accessible locations.",
+        },
+        "versions": {
+            "v1": {
+                "tasks": {
+                    "cyto": {
+                        "location": [
+                            "https://example.com/model1",
+                            "https://example.com/model2",
+                        ],
+                        "location_type": ["url", "url"],
+                    }
+                }
+            }
+        },
+        "params": [{"name": "Param1", "arg_name": "param1", "value": 1}],
+    }
+    manifest = ModelManifest(**manifest_data)
+    filtered, changed, num_removed = filter_location(manifest)
+    assert changed is False
+    assert num_removed == 0
+    # The task should still exist
+    assert "cyto" in filtered.versions["v1"].tasks
+
+
 @pytest.mark.parametrize(
     "input_value,expected",
     [

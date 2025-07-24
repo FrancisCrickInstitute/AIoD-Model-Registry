@@ -48,6 +48,7 @@ def filter_location(manifest: ModelManifest) -> tuple[ModelManifest, bool, int]:
     If nothing is accessible, set the fields to None.
     """
     num = 0
+    changed = False
     # Make a deep copy of the manifest
     new_manifest = manifest.model_copy(deep=True)
     # Loop through the versions and tasks and remove inaccessible ones
