@@ -196,6 +196,9 @@
                 ]
               },
               "type": "array"
+            },
+            {
+              "type": "null"
             }
           ],
           "description": "Default parameter value. If a list, the parameters will be treated as dropdown choices, where the first is the default. The type of the first element will be used to determine the type of the parameter.",
@@ -212,6 +215,18 @@
           ],
           "default": null,
           "title": "Tooltip"
+        },
+        "dtype": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Dtype"
         }
       },
       "required": [
@@ -226,12 +241,23 @@
       "properties": {
         "tasks": {
           "patternProperties": {
-            "^(?i:mito|er|ne|everything)$": {
+            "^(?i:mito|er|ne|everything|nuclei|cyto|drop)$": {
               "$ref": "#/$defs/ModelVersionTask"
             }
           },
           "title": "Tasks",
           "type": "object"
+        },
+        "metadata": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Metadata"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         }
       },
       "required": [
@@ -244,18 +270,30 @@
       "additionalProperties": false,
       "properties": {
         "location": {
-          "description": "Either a url or a filepath (will be skipped if the path does not exist/cannot be read!)",
-          "title": "Location",
-          "type": "string"
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          ],
+          "description": "A url or a filepath, or list of alternative locations (skipped if location does not exist/cannot be read!)",
+          "title": "Location"
         },
         "config_path": {
           "anyOf": [
             {
-              "format": "path",
               "type": "string"
             },
             {
-              "type": "string"
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
             },
             {
               "type": "null"
@@ -285,11 +323,28 @@
               "type": "string"
             },
             {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
               "type": "null"
             }
           ],
           "default": null,
           "title": "Location Type"
+        },
+        "metadata": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Metadata"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         }
       },
       "required": [
@@ -301,6 +356,10 @@
     "Publication": {
       "additionalProperties": false,
       "properties": {
+        "title": {
+          "title": "Title",
+          "type": "string"
+        },
         "info": {
           "description": "Information on publication, whether it pertains to the model or the underlying data or something else.",
           "title": "Info",
@@ -311,6 +370,18 @@
           "minLength": 1,
           "title": "Url",
           "type": "string"
+        },
+        "year": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Year"
         },
         "doi": {
           "anyOf": [
@@ -341,6 +412,7 @@
         }
       },
       "required": [
+        "title",
         "info",
         "url"
       ],
@@ -371,6 +443,10 @@
     "versions": {
       "additionalProperties": {
         "$ref": "#/$defs/ModelVersion"
+      },
+      "propertyNames": {
+        "maxLength": 50,
+        "minLength": 1
       },
       "title": "Versions",
       "type": "object"
@@ -405,6 +481,33 @@
     },
     "metadata": {
       "$ref": "#/$defs/Metadata"
+    },
+    "usage_guide": {
+      "anyOf": [
+        {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "format": "path",
+              "type": "string"
+            },
+            {
+              "format": "uri",
+              "minLength": 1,
+              "type": "string"
+            }
+          ],
+          "description": "A path to a file, a URL, or a string containing the usage guide for the model.",
+          "title": "Usage Guide"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Usage Guide"
     }
   },
   "required": [
