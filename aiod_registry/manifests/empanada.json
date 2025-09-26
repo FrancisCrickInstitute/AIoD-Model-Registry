@@ -1,7 +1,7 @@
 {
-    "name": "Mitonet",
+    "name": "empanada",
     "metadata": {
-      "description": "MitoNet is a deep learning model for mitochondria segmentation in EM images.",
+      "description": "Empanada contains segmentation models for mitochondria, nuclei, and lipid droplets in EM images.",
       "authors": [
         {
           "name": "Ryan Conrad",
@@ -32,6 +32,20 @@
         "tasks": {
           "mito": {
             "location": "https://zenodo.org/record/6861565/files/MitoNet_v1_mini.pth?download=1"
+          }
+        }
+      },
+      "NucleoNet v1": {
+        "tasks": {
+          "nuclei": {
+            "location": "https://zenodo.org/records/15298854/files/PanopticDeepLabPR_663ba73a-0908-4f7d-b59e-88a2d3ea2e39_panoptic_deeplab_pointrend.pth?download=1"
+          }
+        }
+      },
+      "DropNet v1": {
+        "tasks": {
+          "drop": {
+            "location": "https://zenodo.org/records/15298854/files/PanopticDeepLabPR_b0d99498-6c99-4b45-844e-2b4dca58f24a_panoptic_deeplab_pointrend.pth?download=1"
           }
         }
       }
@@ -70,7 +84,7 @@
     {
         "name": "Maximum objects",
         "arg_name": "max_objects",
-        "value": 1000,
+        "value": 10000,
         "tooltip": "Maximum number of objects to segment per class"
     },
     {

@@ -14,6 +14,7 @@ TASK_NAMES = {
     "everything": "Everything!",
     "nuclei": "Nuclei",
     "cyto": "Cytoplasm",
+    "drop": "Lipid Droplets"
 }
 task_names = "|".join(TASK_NAMES.keys())
 
