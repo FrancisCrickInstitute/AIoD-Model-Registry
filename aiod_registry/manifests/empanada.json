@@ -1,5 +1,5 @@
 {
-    "name": "empanada",
+    "name": "Empanada",
     "metadata": {
       "description": "Empanada contains segmentation models for mitochondria, nuclei, and lipid droplets in EM images.",
       "authors": [
