@@ -147,3 +147,24 @@ def load_manifests(
     else:
         # We still want to flatten the manifests for consistency
         return {k: flatten_manifest(v) for k, v in manifests.items()}
+
+
+def add_model_local(
+    model_name: str, model_task: str, location: str, manifest_name: str
+):
+    for path in get_manifest_paths():
+        if path.name == manifest_name + ".json":
+            with open(path, "r") as f:
+                json_manifest = json.load(f)
+            # DEBUG
+            versions = json_manifest["versions"]
+            print(f"versions: {versions}")
+            json_manifest["versions"][model_name] = {
+                "tasks": {model_task: {"location": location}}
+            }
+            with open(path, "w") as f:
+                json.dump(json_manifest, f, indent=4)
+            break
+
+
+# add_model_local("finetuned_model", "mito", "some/location/", "empanada")
