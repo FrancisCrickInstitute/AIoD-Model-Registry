@@ -24,6 +24,10 @@
         "mito": {
           "location": ["/nemo/stp/ddt/outputs/aiod_models/mito_5nm_intensity_augs_warp.best.969.pt", "/media/DATA/aiod_models/mito_5nm_intensity_augs_warp.best.969.pt"],
           "config_path": ["/nemo/stp/ddt/outputs/aiod_models/mito_5nm_intensity_augs_warp.yml", "/media/DATA/aiod_models/mito_5nm_intensity_augs_warp.yml"]
+        },
+        "er": {
+          "location": "/nemo/stp/ddt/outputs/carltonj/er_model/er.yml",
+          "config_path": "/nemo/stp/ddt/outputs/carltonj/er_model/lr_0_00001.best.873.pt"
         }
       }
     },
