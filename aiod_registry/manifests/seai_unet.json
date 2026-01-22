@@ -42,6 +42,14 @@
           "config_path": ["/nemo/stp/ddt/outputs/aiod_models/Attention_HUNet_NE.yml", "/media/DATA/aiod_models/Attention_HUNet_NE.yml"]
         }
       }
+    },
+    "Finetuned Attention U-Net": {
+      "tasks": {
+        "ne": {
+          "location": "/nemo/stp/ddt/outputs/carltonj/ne_model/ne_epoch1500_lr0.00005.best.1827.pt",
+          "config_path": "/nemo/stp/ddt/outputs/carltonj/ne_model/ne_epoch1500_lr0.00005.yml"
+        }
+      }
     }
   }
 }
