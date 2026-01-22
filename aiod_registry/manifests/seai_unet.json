@@ -24,7 +24,11 @@
         "mito": {
           "location": ["/nemo/stp/ddt/outputs/aiod_models/mito_5nm_intensity_augs_warp.best.969.pt", "/media/DATA/aiod_models/mito_5nm_intensity_augs_warp.best.969.pt"],
           "config_path": ["/nemo/stp/ddt/outputs/aiod_models/mito_5nm_intensity_augs_warp.yml", "/media/DATA/aiod_models/mito_5nm_intensity_augs_warp.yml"]
-        },
+        }
+      }
+    },
+    "Fine-tuned HU-Net": {
+      "tasks": {
         "er": {
           "location": "/nemo/stp/ddt/outputs/carltonj/er_model/er.yml",
           "config_path": "/nemo/stp/ddt/outputs/carltonj/er_model/lr_0_00001.best.873.pt"
@@ -43,7 +47,7 @@
         }
       }
     },
-    "Finetuned Attention U-Net": {
+    "Fine-tuned Attention U-Net": {
       "tasks": {
         "ne": {
           "location": "/nemo/stp/ddt/outputs/carltonj/ne_model/ne_epoch1500_lr0.00005.best.1827.pt",
