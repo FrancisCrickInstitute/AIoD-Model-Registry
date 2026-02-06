@@ -6,7 +6,6 @@ from urllib.parse import urlparse
 from pydantic import BaseModel, ConfigDict, Field, model_validator, AnyUrl
 from typing_extensions import Annotated
 
-
 TASK_NAMES = {
     "mito": "Mitochondria",
     "er": "Endoplasmic Reticulum",
@@ -14,7 +13,7 @@ TASK_NAMES = {
     "everything": "Everything!",
     "nuclei": "Nuclei",
     "cyto": "Cytoplasm",
-    "drop": "Lipid Droplets"
+    "drop": "Lipid Droplets",
 }
 task_names = "|".join(TASK_NAMES.keys())
 
@@ -161,6 +160,11 @@ class Metadata(StrictModel):
         return f"Description: {self.description}\n{misc_info if len(misc_info) > 0 else ''}{all_pubs}"
 
 
+class FinetuningMeta(StrictModel):
+    patch_size_divisor: int
+    avail_layers: list[str]
+
+
 class ModelVersionTask(StrictModel):
     location: Union[str, list[str]] = Field(
         ...,
@@ -169,6 +173,7 @@ class ModelVersionTask(StrictModel):
     config_path: Optional[Union[str, list[str]]] = None
     params: Optional[list[ModelParam]] = None
     location_type: Optional[Union[str, list[str]]] = None
+    finetuning_meta_data: Optional[FinetuningMeta] = None
     metadata: Optional[Metadata] = None
 
     @model_validator(mode="after")

@@ -1,103 +1,111 @@
 {
-    "name": "Empanada",
-    "metadata": {
-      "description": "Empanada contains segmentation models for mitochondria, nuclei, and lipid droplets in EM images.",
-      "authors": [
-        {
-          "name": "Ryan Conrad",
-          "affiliation": "Center for Molecular Microscopy, Center for Cancer Research, National Cancer Institute, National Institutes of Health, Bethesda, MD 20892, USA"
-        },
-        {
-          "name": "Kedar Narayan",
-          "affiliation": "Center for Molecular Microscopy, Center for Cancer Research, National Cancer Institute, National Institutes of Health, Bethesda, MD 20892, USA"
-        }
-      ],
-      "pubs": [
-        {
-          "title": "Instance segmentation of mitochondria in electron microscopy images with a generalist deep learning model trained on a diverse dataset",
-          "info": "Main paper that describes model & data",
-          "url": "https://doi.org/10.1016/j.cels.2022.12.006"
-        }
-      ]
-    },
-    "versions": {
-      "MitoNet v1": {
-        "tasks": {
-          "mito": {
-            "location": "https://zenodo.org/record/6861565/files/MitoNet_v1.pth?download=1"
-          }
-        }
+  "name": "Empanada",
+  "metadata": {
+    "description": "Empanada contains segmentation models for mitochondria, nuclei, and lipid droplets in EM images.",
+    "authors": [
+      {
+        "name": "Ryan Conrad",
+        "affiliation": "Center for Molecular Microscopy, Center for Cancer Research, National Cancer Institute, National Institutes of Health, Bethesda, MD 20892, USA"
       },
-      "MitoNet Mini v1": {
-        "tasks": {
-          "mito": {
-            "location": "https://zenodo.org/record/6861565/files/MitoNet_v1_mini.pth?download=1"
-          }
-        }
-      },
-      "NucleoNet v1": {
-        "tasks": {
-          "nuclei": {
-            "location": "https://zenodo.org/records/15298854/files/PanopticDeepLabPR_663ba73a-0908-4f7d-b59e-88a2d3ea2e39_panoptic_deeplab_pointrend.pth?download=1"
-          }
-        }
-      },
-      "DropNet v1": {
-        "tasks": {
-          "drop": {
-            "location": "https://zenodo.org/records/15298854/files/PanopticDeepLabPR_b0d99498-6c99-4b45-844e-2b4dca58f24a_panoptic_deeplab_pointrend.pth?download=1"
+      {
+        "name": "Kedar Narayan",
+        "affiliation": "Center for Molecular Microscopy, Center for Cancer Research, National Cancer Institute, National Institutes of Health, Bethesda, MD 20892, USA"
+      }
+    ],
+    "pubs": [
+      {
+        "title": "Instance segmentation of mitochondria in electron microscopy images with a generalist deep learning model trained on a diverse dataset",
+        "info": "Main paper that describes model & data",
+        "url": "https://doi.org/10.1016/j.cels.2022.12.006"
+      }
+    ]
+  },
+  "versions": {
+    "MitoNet v1": {
+      "tasks": {
+        "mito": {
+          "location": "https://zenodo.org/record/6861565/files/MitoNet_v1.pth?download=1",
+          "finetuning_meta_data": {
+            "patch_size_divisor": 16,
+            "avail_layers": ["decoder", "layer1", "layer2", "layer3", "layer4"]
           }
         }
       }
     },
-    "params": [
-    {
-        "name": "Plane",
-        "arg_name": "plane",
-        "value": ["XY", "XZ", "YZ", "All"],
-        "tooltip": "Whether to use all planes (XY, XZ, YZ) or a single plane"
+    "MitoNet Mini v1": {
+      "tasks": {
+        "mito": {
+          "location": "https://zenodo.org/record/6861565/files/MitoNet_v1_mini.pth?download=1",
+          "finetuning_meta_data": {
+            "patch_size_divisor": 128,
+            "avail_layers": ["decoder", "layer1", "layer2", "layer3", "layer4"]
+          }
+        }
+      }
     },
-    {
-        "name": "Downsampling",
-        "arg_name": "downsampling",
-        "value": [1, 2, 4, 8, 16, 32, 64],
-        "tooltip": "Downsampling factor for the input image"
+    "NucleoNet v1": {
+      "tasks": {
+        "nuclei": {
+          "location": "https://zenodo.org/records/15298854/files/PanopticDeepLabPR_663ba73a-0908-4f7d-b59e-88a2d3ea2e39_panoptic_deeplab_pointrend.pth?download=1"
+        }
+      }
     },
-    {
-        "name": "Segmentation threshold",
-        "arg_name": "conf_threshold",
-        "value": 0.5,
-        "tooltip": "Confidence threshold for the segmentation"
-    },
-    {
-        "name": "Center threshold",
-        "arg_name": "center_threshold",
-        "value": 0.1,
-        "tooltip": "Confidence threshold for the center"
-    },
-    {
-        "name": "Minimum distance",
-        "arg_name": "min_distance",
-        "value": 3,
-        "tooltip": "Minimum distance between object centers"
-    },
-    {
-        "name": "Maximum objects",
-        "arg_name": "max_objects",
-        "value": 10000,
-        "tooltip": "Maximum number of objects to segment per class"
-    },
-    {
-        "name": "Semantic only",
-        "arg_name": "semantic_only",
-        "value": false,
-        "tooltip": "Only run semantic segmentation for all classes"
-    },
-    {
-        "name": "Fine boundaries",
-        "arg_name": "fine_boundaries",
-        "value": false,
-        "tooltip": "Finer boundaries between objects"
+    "DropNet v1": {
+      "tasks": {
+        "drop": {
+          "location": "https://zenodo.org/records/15298854/files/PanopticDeepLabPR_b0d99498-6c99-4b45-844e-2b4dca58f24a_panoptic_deeplab_pointrend.pth?download=1"
+        }
+      }
     }
-    ]
-  }
+  },
+  "params": [
+    {
+      "name": "Plane",
+      "arg_name": "plane",
+      "value": ["XY", "XZ", "YZ", "All"],
+      "tooltip": "Whether to use all planes (XY, XZ, YZ) or a single plane"
+    },
+    {
+      "name": "Downsampling",
+      "arg_name": "downsampling",
+      "value": [1, 2, 4, 8, 16, 32, 64],
+      "tooltip": "Downsampling factor for the input image"
+    },
+    {
+      "name": "Segmentation threshold",
+      "arg_name": "conf_threshold",
+      "value": 0.5,
+      "tooltip": "Confidence threshold for the segmentation"
+    },
+    {
+      "name": "Center threshold",
+      "arg_name": "center_threshold",
+      "value": 0.1,
+      "tooltip": "Confidence threshold for the center"
+    },
+    {
+      "name": "Minimum distance",
+      "arg_name": "min_distance",
+      "value": 3,
+      "tooltip": "Minimum distance between object centers"
+    },
+    {
+      "name": "Maximum objects",
+      "arg_name": "max_objects",
+      "value": 10000,
+      "tooltip": "Maximum number of objects to segment per class"
+    },
+    {
+      "name": "Semantic only",
+      "arg_name": "semantic_only",
+      "value": false,
+      "tooltip": "Only run semantic segmentation for all classes"
+    },
+    {
+      "name": "Fine boundaries",
+      "arg_name": "fine_boundaries",
+      "value": false,
+      "tooltip": "Finer boundaries between objects"
+    }
+  ]
+}

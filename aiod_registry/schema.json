@@ -69,6 +69,35 @@
       "title": "Author",
       "type": "object"
     },
+    "FinetuningMeta": {
+      "additionalProperties": false,
+      "properties": {
+        "patch_size": {
+          "maxItems": 1,
+          "minItems": 1,
+          "prefixItems": [
+            {
+              "type": "integer"
+            }
+          ],
+          "title": "Patch Size",
+          "type": "array"
+        },
+        "avail_layers": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Avail Layers",
+          "type": "array"
+        }
+      },
+      "required": [
+        "patch_size",
+        "avail_layers"
+      ],
+      "title": "FinetuningMeta",
+      "type": "object"
+    },
     "Metadata": {
       "additionalProperties": false,
       "properties": {
@@ -334,6 +363,17 @@
           ],
           "default": null,
           "title": "Location Type"
+        },
+        "finetuning_meta_data": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/FinetuningMeta"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         },
         "metadata": {
           "anyOf": [
