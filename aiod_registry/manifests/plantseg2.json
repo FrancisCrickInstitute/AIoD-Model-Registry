@@ -1,0 +1,339 @@
+{
+  "name": "PlantSeg 2",
+  "short_name": "plantseg2",
+  "metadata": {
+    "description": "PlantSeg 2.0: Advanced Interactive User-Friendly Tissue Segmentation",
+    "url": "https://kreshuklab.github.io/plant-seg/",
+    "repo": "https://github.com/kreshuklab/plant-seg",
+    "pubs": [
+      {
+        "info": "PlantSeg v2",
+        "url": "https://kreshuklab.github.io/plant-seg/",
+        "title": "PlantSeg 2.0: Advanced Interactive User-Friendly Tissue Segmentation",
+        "authors": [
+          {
+            "name": "Qin Yu",
+            "affiliation": "Cell Biology and Biophysics Unit, European Molecular Biology Laboratory, 69117 Heidelberg, Germany"
+          },
+          {
+            "name": "Lorenzo Cerrone",
+            "affiliation": "BioVisionCenter, University of Zurich, 8057 Zurich, Switzerland"
+          },
+          {
+            "name": "Kai Riedmiller",
+            "affiliation": "Scientific Software Center, Heidelberg University, 69117 Heidelberg, Germany"
+          },
+          {
+            "name": "Adrian Wolny",
+            "affiliation": "Cell Biology and Biophysics Unit, European Molecular Biology Laboratory, 69117 Heidelberg, Germany"
+          },
+          {
+            "name": "Alexis Maizel",
+            "affiliation": "Centre for Organismal Studies, Heidelberg University, 69120 Heidelberg, Germany"
+          },
+          {
+            "name": "Anna Kreshuk",
+            "affiliation": "Cell Biology and Biophysics Unit, European Molecular Biology Laboratory, 69117 Heidelberg, Germany"
+          }
+        ]
+      },
+      {
+        "info": "PlantSeg v1",
+        "url": "https://doi.org/10.7554/eLife.57613",
+        "title": "Accurate and versatile 3D segmentation of plant tissues at cellular resolution",
+        "doi": "10.7554/eLife.57613",
+        "authors": [
+          {
+            "name": "Adrian Wolny",
+            "affiliation": "Cell Biology and Biophysics Unit, European Molecular Biology Laboratory, Heidelberg, Germany"
+          },
+          {
+            "name": "Lorenzo Cerrone",
+            "affiliation": "Cell Biology and Biophysics Unit, European Molecular Biology Laboratory, Heidelberg, Germany"
+          },
+          {
+            "name": "Athul Vijayan",
+            "affiliation": "Centre for Organismal Studies, Heidelberg University, Heidelberg, Germany"
+          },
+          {
+            "name": "Rachele Tofanelli",
+            "affiliation": "Centre for Organismal Studies, Heidelberg University, Heidelberg, Germany"
+          },
+          {
+            "name": "Amaya Vilches Barro",
+            "affiliation": "Centre for Organismal Studies, Heidelberg University, Heidelberg, Germany"
+          },
+          {
+            "name": "Marion Louveaux",
+            "affiliation": "Laboratoire Reproduction et Développement des Plantes, Université de Lyon, ENS de Lyon, CNRS, INRAE, Lyon, France"
+          },
+          {
+            "name": "Christian Wenzl",
+            "affiliation": "Centre for Organismal Studies, Heidelberg University, Heidelberg, Germany"
+          },
+          {
+            "name": "Sören Strauss",
+            "affiliation": "Centre for Organismal Studies, Heidelberg University, Heidelberg, Germany"
+          },
+          {
+            "name": "David Wilson-Sánchez",
+            "affiliation": "Centre for Organismal Studies, Heidelberg University, Heidelberg, Germany"
+          },
+          {
+            "name": "Rena Lymbouridou",
+            "affiliation": "Centre for Organismal Studies, Heidelberg University, Heidelberg, Germany"
+          },
+          {
+            "name": "Alexis Maizel",
+            "affiliation": "Centre for Organismal Studies, Heidelberg University, Heidelberg, Germany"
+          },
+          {
+            "name": "Anna Kreshuk",
+            "affiliation": "Cell Biology and Biophysics Unit, European Molecular Biology Laboratory, Heidelberg, Germany"
+          }
+        ]
+      }
+    ]
+  },
+  "versions": {
+    "generic_confocal_3D_unet": {
+      "tasks": {
+        "boundaries": {
+          "location": "https://zenodo.org/record/7805434/files/unet3d-arabidopsis-ovules-confocal-ds2x.pytorch"
+        }
+      }
+    },
+    "generic_light_sheet_3D_unet": {
+      "tasks": {
+        "boundaries": {
+          "location": "https://zenodo.org/record/7765026/files/unet3d-lateral-root-lightsheet-ds1x.pytorch"
+        }
+      }
+    },
+    "confocal_3D_unet_ovules_ds1x": {
+      "tasks": {
+        "boundaries": {
+          "location": "https://zenodo.org/record/7772553/files/unet3d-arabidopsis-ovules-confocal-ds1x.pytorch"
+        }
+      }
+    },
+    "confocal_3D_unet_ovules_ds2x": {
+      "tasks": {
+        "boundaries": {
+          "location": "https://zenodo.org/record/7805434/files/unet3d-arabidopsis-ovules-confocal-ds2x.pytorch"
+        }
+      }
+    },
+    "confocal_3D_unet_ovules_ds3x": {
+      "tasks": {
+        "boundaries": {
+          "location": "https://zenodo.org/record/7772532/files/unet3d-arabidopsis-ovules-confocal-ds3x.pytorch"
+        }
+      }
+    },
+    "confocal_2D_unet_ovules_ds2x": {
+      "tasks": {
+        "boundaries": {
+          "location": "https://zenodo.org/record/7772709/files/confocal_2D_unet_ovules_ds2x.pytorch"
+        }
+      }
+    },
+    "lightsheet_3D_unet_root_ds1x": {
+      "tasks": {
+        "boundaries": {
+          "location": "https://zenodo.org/record/7765026/files/unet3d-lateral-root-lightsheet-ds1x.pytorch"
+        }
+      }
+    },
+    "lightsheet_3D_unet_root_ds2x": {
+      "tasks": {
+        "boundaries": {
+          "location": "https://zenodo.org/record/7774122/files/unet3d-lateral-root-lightsheet-ds2x.pytorch"
+        }
+      }
+    },
+    "lightsheet_3D_unet_root_ds3x": {
+      "tasks": {
+        "boundaries": {
+          "location": "https://zenodo.org/record/7774145/files/unet3d-lateral-root-lightsheet-ds3x.pytorch"
+        }
+      }
+    },
+    "lightsheet_2D_unet_root_ds1x": {
+      "tasks": {
+        "boundaries": {
+          "location": "https://zenodo.org/record/7774537/files/unet2d-lateral-root-lightsheet.pytorch"
+        }
+      }
+    },
+    "lightsheet_3D_unet_root_nuclei_ds1x": {
+      "tasks": {
+        "nuclei": {
+          "location": "https://zenodo.org/record/7774421/files/unet3d-lateral-root-nuclei-lightsheet.pytorch"
+        }
+      }
+    },
+    "lightsheet_2D_unet_root_nuclei_ds1x": {
+      "tasks": {
+        "nuclei": {
+          "location": "https://zenodo.org/record/7774563/files/unet2d-lateral-root-nuclei-lightsheet.pytorch"
+        }
+      }
+    },
+    "confocal_2D_unet_sa_meristem_cells": {
+      "tasks": {
+        "boundaries": {
+          "location": "https://zenodo.org/record/7781054/files/confocal_2d_unet_apical_stem.pytorch"
+        }
+      }
+    },
+    "confocal_3D_unet_sa_meristem_cells": {
+      "tasks": {
+        "boundaries": {
+          "location": "https://zenodo.org/record/7768142/files/confocal_pnas_3d.pytorch"
+        }
+      }
+    },
+    "lightsheet_3D_unet_mouse_embryo_cells": {
+      "tasks": {
+        "boundaries": {
+          "location": "https://zenodo.org/record/7774490/files/unet-bce-dice-cell-boundary-311021.pytorch"
+        }
+      }
+    },
+    "confocal_3D_unet_mouse_embryo_nuclei": {
+      "tasks": {
+        "nuclei": {
+          "location": "https://zenodo.org/record/7774505/files/unet-bce-dice-ab-nuclei-boundary-090121.pytorch"
+        }
+      }
+    },
+    "PlantSeg_3Dnuc_platinum": {
+      "tasks": {
+        "nuclei": {
+          "location": "https://zenodo.org/records/10070349/files/FOR2581_PlantSeg_Plant_Nuclei_3D.pytorch"
+        }
+      }
+    }
+  },
+  "params": [
+    {
+      "name": "Patch Size",
+      "arg_name": "patch",
+      "value": null,
+      "dtype": "list",
+      "tooltip": "Patch size for prediction [Z, Y, X]. If null, will be auto-computed. Example: [80, 160, 160]"
+    },
+    {
+      "name": "Patch Halo",
+      "arg_name": "patch_halo",
+      "value": null,
+      "dtype": "list",
+      "tooltip": "Halo size for patches [Z, Y, X]. If null, will be auto-computed. Example: [8, 16, 16]"
+    },
+    {
+      "name": "Single Batch Mode",
+      "arg_name": "single_batch_mode",
+      "value": true,
+      "tooltip": "Whether to process patches one at a time to reduce memory usage."
+    },
+    {
+      "name": "Model Update",
+      "arg_name": "model_update",
+      "value": false,
+      "tooltip": "Whether to check for and download model updates."
+    },
+    {
+      "name": "Disable Progress Bar",
+      "arg_name": "disable_tqdm",
+      "value": false,
+      "tooltip": "Whether to disable the progress bar during prediction."
+    },
+    {
+      "name": "Watershed Threshold",
+      "arg_name": "ws_threshold",
+      "value": 0.5,
+      "tooltip": "Threshold for watershed segmentation. Higher values create fewer, larger segments."
+    },
+    {
+      "name": "Watershed Sigma Seeds",
+      "arg_name": "ws_sigma_seeds",
+      "value": 1.0,
+      "tooltip": "Sigma for Gaussian smoothing of seeds in watershed."
+    },
+    {
+      "name": "Watershed Stacked",
+      "arg_name": "ws_stacked",
+      "value": false,
+      "tooltip": "Whether to apply watershed slice-by-slice (2D) instead of in 3D."
+    },
+    {
+      "name": "Watershed Sigma Weights",
+      "arg_name": "ws_sigma_weights",
+      "value": 2.0,
+      "tooltip": "Sigma for Gaussian smoothing of boundary map weights in watershed."
+    },
+    {
+      "name": "Watershed Min Size",
+      "arg_name": "ws_min_size",
+      "value": 100,
+      "tooltip": "Minimum size (in voxels) for watershed superpixels. Smaller regions will be removed."
+    },
+    {
+      "name": "Watershed Alpha",
+      "arg_name": "ws_alpha",
+      "value": 1.0,
+      "tooltip": "Alpha parameter for distance transform watershed."
+    },
+    {
+      "name": "Watershed Pixel Pitch",
+      "arg_name": "ws_pixel_pitch",
+      "value": null,
+      "dtype": "list",
+      "tooltip": "Pixel pitch for anisotropic data [Z, Y, X]. If null, assumes isotropic."
+    },
+    {
+      "name": "Watershed Non-Max Suppression",
+      "arg_name": "ws_apply_nonmax_suppression",
+      "value": false,
+      "tooltip": "Whether to apply non-maximum suppression in watershed."
+    },
+    {
+      "name": "GASP Linkage Criteria",
+      "arg_name": "gasp_linkage_criteria",
+      "value": "average",
+      "tooltip": "Linkage criteria for GASP: 'average' or 'mutex_watershed'."
+    },
+    {
+      "name": "GASP Beta",
+      "arg_name": "gasp_beta",
+      "value": 0.5,
+      "tooltip": "Beta parameter for GASP segmentation. Controls merging aggressiveness."
+    },
+    {
+      "name": "GASP Post Min Size",
+      "arg_name": "gasp_post_minsize",
+      "value": 100,
+      "tooltip": "Minimum size (in voxels) for final segments after GASP. Smaller regions will be merged."
+    },
+    {
+      "name": "Number of Threads",
+      "arg_name": "n_threads",
+      "value": 6,
+      "tooltip": "Number of threads to use for watershed and GASP segmentation."
+    },
+    {
+      "name": "Voxel Size",
+      "arg_name": "voxel_size",
+      "value": null,
+      "dtype": "list",
+      "tooltip": "Voxel size [Z, Y, X] for saving TIFF metadata. Example: [1.0, 0.5, 0.5]"
+    },
+    {
+      "name": "Voxel Size Unit",
+      "arg_name": "voxel_size_unit",
+      "value": "um",
+      "tooltip": "Unit for voxel size (e.g., 'um', 'nm', 'mm')."
+    }
+  ]
+}
