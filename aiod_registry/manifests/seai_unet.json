@@ -27,6 +27,14 @@
         }
       }
     },
+    "Fine-tuned HU-Net": {
+      "tasks": {
+        "er": {
+          "location": "/nemo/stp/ddt/outputs/carltonj/er_model/er.yml",
+          "config_path": "/nemo/stp/ddt/outputs/carltonj/er_model/lr_0_00001.best.873.pt"
+        }
+      }
+    },
     "Attention U-Net": {
       "tasks": {
         "mito": {
@@ -36,6 +44,14 @@
         "ne": {
           "location": ["/nemo/stp/ddt/outputs/aiod_models/Attention_HUNet_NE.best.368.pt", "/media/DATA/aiod_models/Attention_HUNet_NE.best.368.pt"],
           "config_path": ["/nemo/stp/ddt/outputs/aiod_models/Attention_HUNet_NE.yml", "/media/DATA/aiod_models/Attention_HUNet_NE.yml"]
+        }
+      }
+    },
+    "Fine-tuned Attention U-Net": {
+      "tasks": {
+        "ne": {
+          "location": "/nemo/stp/ddt/outputs/carltonj/ne_model/ne_epoch1500_lr0.00005.best.1827.pt",
+          "config_path": "/nemo/stp/ddt/outputs/carltonj/ne_model/ne_epoch1500_lr0.00005.yml"
         }
       }
     }
