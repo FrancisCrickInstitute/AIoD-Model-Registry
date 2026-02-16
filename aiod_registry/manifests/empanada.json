@@ -26,6 +26,7 @@
         "mito": {
           "location": "https://zenodo.org/record/6861565/files/MitoNet_v1.pth?download=1",
           "finetuning_meta_data": {
+            "config_file_location": "https://zenodo.org/records/18657117/files/empanada_finetuning_config.yml?download=1",
             "patch_size_divisor": 16,
             "avail_layers": ["decoder", "layer1", "layer2", "layer3", "layer4"]
           }
@@ -37,6 +38,7 @@
         "mito": {
           "location": "https://zenodo.org/record/6861565/files/MitoNet_v1_mini.pth?download=1",
           "finetuning_meta_data": {
+            "config_file_location": "https://zenodo.org/records/18657117/files/empanada_finetuning_config.yml?download=1",
             "patch_size_divisor": 128,
             "avail_layers": ["decoder", "layer1", "layer2", "layer3", "layer4"]
           }

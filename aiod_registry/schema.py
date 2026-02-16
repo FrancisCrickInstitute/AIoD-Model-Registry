@@ -178,6 +178,7 @@ class Metadata(StrictModel):
 
 
 class FinetuningMeta(StrictModel):
+    config_file_location: str
     patch_size_divisor: int
     avail_layers: list[str]
 
