@@ -131,13 +131,18 @@
             "tooltip": "Intersection over Union (IoU) threshold for non-maximum suppression. Higher values allow for more overlapping objects."
         },
         {
-            "name": "Normalization Percentiles",
-            "arg_name": "normalize",
-            "value": [
-                1,
-                99.8
-            ],
-            "tooltip": "Percentile values (pmin, pmax) for image normalization. Images are normalized to these percentile values before prediction."
+            "name": "Normalize Min Percentile",
+            "arg_name": "normalize_pmin",
+            "value": 1,
+            "dtype": "float",
+            "tooltip": "Lower percentile for image normalization. Images are normalized to this percentile value before prediction."
+        },
+        {
+            "name": "Normalize Max Percentile",
+            "arg_name": "normalize_pmax",
+            "value": 99.8,
+            "dtype": "float",
+            "tooltip": "Upper percentile for image normalization. Images are normalized to this percentile value before prediction."
         },
         {
             "name": "Number of Tiles",
