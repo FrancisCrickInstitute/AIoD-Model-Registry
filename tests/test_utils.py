@@ -1,17 +1,15 @@
-import os
-import tempfile
-import shutil
-import pytest
 import json
-from pathlib import Path
-from aiod_registry.utils import (
-    load_manifests,
-    flatten_manifest,
-    filter_location,
-    filter_empty_manifests,
-    is_accessible,
-)
+
+import pytest
+
 from aiod_registry.schema import ModelManifest
+from aiod_registry.utils import (
+    filter_empty_manifests,
+    filter_location,
+    flatten_manifest,
+    is_accessible,
+    load_manifests,
+)
 
 # Example manifest data (based on cellpose.json)
 EXAMPLE_MANIFEST = {
