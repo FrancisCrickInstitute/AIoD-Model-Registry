@@ -31,9 +31,6 @@ def flatten_manifest(manifest: ModelManifest) -> ModelManifest:
     for v_name, version in manifest.versions.items():
         for task_name, task in version.tasks.items():
             new_manifest.versions[v_name].tasks[task_name].location = task.location[0]
-            new_manifest.versions[v_name].tasks[task_name].location_type = (
-                task.location_type[0]
-            )
             new_manifest.versions[v_name].tasks[task_name].config_path = (
                 task.config_path[0] if task.config_path else None
             )
@@ -42,7 +39,7 @@ def flatten_manifest(manifest: ModelManifest) -> ModelManifest:
 
 def filter_location(manifest: ModelManifest) -> tuple[ModelManifest, bool, int]:
     """
-    Filter and flatten the location, location_type, and config_path fields in the manifest.
+    Filter and flatten the location, and config_path fields in the manifest.
     We take the first accessible location and its type.
     Then take the first accessible config path.
     If nothing is accessible, set the fields to None.
@@ -67,10 +64,6 @@ def filter_location(manifest: ModelManifest) -> tuple[ModelManifest, bool, int]:
                 if is_accessible(loc):
                     # Store the first accessible location
                     new_manifest.versions[v_name].tasks[task_name].location = loc
-                    # Flatten the related location type
-                    new_manifest.versions[v_name].tasks[task_name].location_type = (
-                        task.location_type[i]
-                    )
                     # NOTE: Not including config path here in case not paired order
                     break
             # If no location is accessible, remove the task completely

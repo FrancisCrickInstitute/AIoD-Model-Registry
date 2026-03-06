@@ -241,7 +241,7 @@
       "properties": {
         "tasks": {
           "patternProperties": {
-            "^(?i:mito|er|ne|everything|nuclei|cyto|drop)$": {
+            "^(?i:mito|er|ne|everything|nuclei|cyto|drop|boundaries)$": {
               "$ref": "#/$defs/ModelVersionTask"
             }
           },
@@ -316,24 +316,6 @@
           ],
           "default": null,
           "title": "Params"
-        },
-        "location_type": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "items": {
-                "type": "string"
-              },
-              "type": "array"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Location Type"
         },
         "metadata": {
           "anyOf": [
