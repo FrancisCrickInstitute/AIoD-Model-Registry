@@ -1,26 +1,31 @@
 # AIoD Model Registry
-This repository contains the central document that lists all AI models available within AIoD.
+This repository contains the central manifests/schemas that defines the models available within AIoD.
 
-## Code Overview:
-This repository contains the core description for all AI models available within AIoD. All submissions for AI models must go through the PR process and conform to the existing template design.
+In addition, are:
 
-## Contact Details:
+- Tests for validating schemas
+- Utility functions for ingesting the schemas and filtering by whether a user has access to each model, enabling us to [automatically write the UI for our Napari plugin](https://franciscrickinstitute.github.io/aiod_docs/sections/development/#automatic-ui-construction)
+
+## Installation
+
+```
+git clone https://github.com/FrancisCrickInstitute/AIoD-Model-Registry.git
+cd AIoD-Model-Registry/
+pip install .
+```
+
+or
+
+```
+pip install git+https://github.com/FrancisCrickInstitute/AIoD-Model-Registry.git
+```
+
+## Contact Details
 * cameron.shand@crick.ac.uk
 * jon.smith@crick.ac.uk
 
-## Development Setup:
-This repository is used in conjunction with the AIoD front ends available here:
-* https://github.com/FrancisCrickInstitute/ai-on-demand/
-
-## Production Setup:
-Install one of the AIoD front-ends or wrappers from:
-* https://github.com/FrancisCrickInstitute/ai-on-demand/
- 
-## Usage:
-Refer to your installed front-end or wrapper.
-
-## Contribution Guidelines:
-See the [contributing page on the Wiki](https://github.com/FrancisCrickInstitute/AIoD-Model-Registry/wiki/Model-Registry#contributing) for the steps necessary on how to contribute a model.
+## Contribution Guidelines
+See our [documentation](https://franciscrickinstitute.github.io/aiod_docs/sections/contributing/expanding/) for guidance on adding models to this repo.
 
 ### Local Validation
 To locally test whether a new manifest is eligible, simply run `pytest -v tests/`, where any errors will be detailed by Pydantic.
