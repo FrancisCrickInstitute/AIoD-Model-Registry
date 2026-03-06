@@ -10,6 +10,9 @@ description = "A registry of models for use with AI OnDemand (AIoD)"
 version = "0.0.1"
 authors = [
     {name = "Cameron Shand", email = "cameron.shand@crick.ac.uk"},
+    {name = "Numan Ahmed", email = "numan.ahmed@crick.ac.uk"},
+    {name = "Qin Yu", email = "qin.yu@crick.ac.uk"},
+    {name = "Fiona Young", email = "fiona.young@crick.ac.uk"},
     {name = "Jon Smith", email = "jon.smith@crick.ac.uk"}
 ]
 dependencies = [
