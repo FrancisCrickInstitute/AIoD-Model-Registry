@@ -16,7 +16,10 @@ def is_accessible(location: str | None) -> bool:
         return False
     res = urlparse(location)
     if res.scheme in ("file", ""):
-        return Path(res.path).exists()
+        try:
+            return Path(res.path).exists()
+        except PermissionError:
+            return False
     else:
         return True
 
