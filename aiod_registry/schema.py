@@ -1,11 +1,9 @@
 import builtins
 from pathlib import Path
 from typing import Optional, Union
-from urllib.parse import urlparse
 
 from pydantic import BaseModel, ConfigDict, Field, model_validator, AnyUrl
 from typing_extensions import Annotated
-
 
 TASK_NAMES = {
     "mito": "Mitochondria",
@@ -169,37 +167,12 @@ class ModelVersionTask(StrictModel):
     )
     config_path: Optional[Union[str, list[str]]] = None
     params: Optional[list[ModelParam]] = None
-    location_type: Optional[Union[str, list[str]]] = None
     metadata: Optional[Metadata] = None
 
     @model_validator(mode="after")
-    def get_location_type(self):
-        # Skip if provided
-        if self.location_type is not None:
-            # If a single location, convert to list
-            if isinstance(self.location_type, str):
-                self.location_type = [self.location_type]
-            return self
+    def get_config_path(self):
         if not isinstance(self.location, list):
             self.location = [self.location]
-        # Create a list to store the type of location
-        self.location_type = []
-        # Determine the type of location
-        for loc in self.location:
-            res = urlparse(loc)
-            if res.scheme in ("http", "https"):
-                self.location_type.append("url")
-            elif res.scheme in ("file", ""):
-                self.location_type.append("file")
-            else:
-                # NOTE: Because of including "" above, it is unlikely this will be reached
-                raise TypeError(
-                    f"Cannot determine type (file/url) of location: {self.location}!"
-                )
-        return self
-
-    @model_validator(mode="after")
-    def get_config_path(self):
         if self.config_path is None:
             self.config_path = [None] * len(self.location)
         elif not isinstance(self.config_path, list):

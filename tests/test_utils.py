@@ -152,7 +152,6 @@ def test_filter_location_no_change(tmp_path):
                             "https://example.com/model1",
                             "https://example.com/model2",
                         ],
-                        "location_type": ["url", "url"],
                     }
                 }
             }
