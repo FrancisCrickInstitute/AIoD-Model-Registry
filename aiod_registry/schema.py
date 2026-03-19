@@ -35,7 +35,7 @@ ParamValue = Annotated[
     Union[str, int, float, bool, None, list[Union[str, int, float, bool]]],
     Field(
         ...,
-        description="Default parameter value. If a list, the parameters will be treated as dropdown choices, where the first is the default. The type of the first element will be used to determine the type of the parameter.",
+        description="Default parameter value. If a list, the parameters will be treated as dropdown choices. Use the `default` field on ModelParam to specify which item is selected by default (otherwise the first item is used). The type of the default (or first) element determines the parameter type.",
     ),
 ]
 Usage = Annotated[
@@ -70,6 +70,7 @@ class ModelParam(StrictModel):
     name: ParamName
     arg_name: Optional[str] = None
     value: ParamValue
+    default: Optional[Union[str, int, float, bool]] = None  # Override default for list values
     tooltip: Optional[str] = None
     dtype: Optional[str] = None  # Used of default value is None
     _dtype = None  # Determined from value if given
@@ -81,9 +82,23 @@ class ModelParam(StrictModel):
         return self
 
     @model_validator(mode="after")
+    def validate_default(self):
+        if self.default is not None:
+            if not isinstance(self.value, list):
+                raise ValueError(
+                    f"Parameter {self.name}: `default` can only be set when `value` is a list."
+                )
+            if self.default not in self.value:
+                raise ValueError(
+                    f"Parameter {self.name}: `default` value {self.default!r} is not in the choices list {self.value}."
+                )
+        return self
+
+    @model_validator(mode="after")
     def extract_arg_type(self):
         if isinstance(self.value, list):
-            self._dtype = type(self.value[0])
+            reference = self.default if self.default is not None else self.value[0]
+            self._dtype = type(reference)
         else:
             self._dtype = type(self.value)
         # If None, we need a dtype to poss cast to when dealing with GUIs
