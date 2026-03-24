@@ -208,6 +208,10 @@ class ModelVersionTask(StrictModel):
 
 
 class ModelVersion(StrictModel):
+    axes: Optional[str] = Field(
+        None,
+        description="Axes specification for the model (e.g., 'YX' for 2D, 'ZYX' for 3D, 'YXC' or 'CZYX' with channels)",
+    )
     tasks: dict[Task, ModelVersionTask]
     metadata: Optional[Metadata] = None
 
