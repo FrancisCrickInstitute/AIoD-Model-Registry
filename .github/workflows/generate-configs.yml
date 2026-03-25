@@ -33,7 +33,7 @@ jobs:
         run: |
           git add default_configs/
           git diff --cached --exit-code || \
-            (echo "::error::Default configs are out of date. Run save_all_default_configs() locally and commit the results." && exit 1)
+            (echo "::error::Default configs are out of date. Run `aiod-gen-configs` command locally and commit the results." && exit 1)
 
   # On merge to main: regenerate and commit any changes
   update-configs:
