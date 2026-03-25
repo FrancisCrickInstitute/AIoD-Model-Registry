@@ -3,8 +3,9 @@ import os
 import sys
 
 import pytest
+from pydantic import ValidationError
 
-from aiod_registry.schema import ModelManifest
+from aiod_registry.schema import ModelManifest, ModelParam
 from aiod_registry.utils import (
     filter_empty_manifests,
     filter_location,
@@ -217,3 +218,33 @@ def test_is_accessible_permission_denied(tmp_path):
     finally:
         # Restore permissions so that pytest's tmp_path cleanup can delete the dir
         subdir.chmod(0o755)
+
+
+class TestModelParamDefault:
+    def test_list_no_default_uses_first(self):
+        """Without `default`, the first list item determines dtype and is the implicit default."""
+        p = ModelParam(name="mode", value=["fast", "slow", "accurate"])
+        assert p.default is None
+        assert p._dtype is str
+
+    def test_list_default_non_first_item(self):
+        """Setting `default` to a non-first list item is accepted and reflected in _dtype."""
+        p = ModelParam(name="mode", value=["fast", "slow", "accurate"], default="accurate")
+        assert p.default == "accurate"
+        assert p._dtype is str
+
+    def test_list_default_int(self):
+        """Integer default picks the correct dtype."""
+        p = ModelParam(name="level", value=[1, 2, 3], default=3)
+        assert p.default == 3
+        assert p._dtype is int
+
+    def test_default_not_in_list_raises(self):
+        """A `default` value that is not in the choices list must raise a ValidationError."""
+        with pytest.raises(ValidationError, match="not in the choices list"):
+            ModelParam(name="mode", value=["fast", "slow"], default="medium")
+
+    def test_default_on_scalar_raises(self):
+        """`default` is only valid for list values; a scalar value must raise a ValidationError."""
+        with pytest.raises(ValidationError, match="only be set when `value` is a list"):
+            ModelParam(name="thresh", value=0.5, default=0.5)

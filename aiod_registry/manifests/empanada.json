@@ -98,6 +98,43 @@
         "arg_name": "fine_boundaries",
         "value": false,
         "tooltip": "Finer boundaries between objects"
+    },
+    {
+        "name": "Fill holes",
+        "arg_name": "fill_holes_in_segmentation",
+        "value": false,
+        "tooltip": "Whether to fill holes in the segmentation masks"
+    },
+    {
+        "name": "Median Filter Size",
+        "arg_name": "median_slices",
+        "value": [1, 3, 5, 7, 9, 11],
+        "default": 3,
+        "tooltip": "Number of image slices over which to apply a median filter to semantic segmentation probabilities. Only applies to 3D/'All'."
+    },
+    {
+        "name": "Erode labels (px; 3D)",
+        "arg_name": "label_erosion",
+        "value": 0,
+        "tooltip": "Will erode objects in the masks by specified number of pixels before final consensus. Only applies to 3D/'All'."
+    },
+    {
+        "name": "Dilate labels (px; 3D)",
+        "arg_name": "label_dilation",
+        "value": 0,
+        "tooltip": "Will dilate objects in the masks by specified number of pixels before final consensus. Only applies to 3D/'All'."
+    },
+    {
+        "name": "Voxel Vote",
+        "arg_name": "pixel_vote_thr",
+        "value": 2,
+        "tooltip": "Number of stacks from ortho-plane inference in which a voxel must be labelled in order to end up in the consensus segmentation. Only applies to 3D/'All'."
+    },
+    {
+        "name": "Allow single-plane objects",
+        "arg_name": "allow_one_view",
+        "value": false,
+        "tooltip": "Whether to allow objects that are only segmented in a single plane (XY, XZ, or YZ) to be included in the final consensus segmentation. Only applies to 3D/'All'."
     }
     ]
   }
