@@ -17,7 +17,8 @@ authors = [
 ]
 dependencies = [
     "pytest",
-    "pydantic >= 2.0"
+    "pydantic >= 2.0",
+    "pyyaml",
 ]
 requires-python = ">=3.11"
 dynamic = ["readme"]
