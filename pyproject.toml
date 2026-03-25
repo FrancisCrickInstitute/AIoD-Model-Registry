@@ -17,6 +17,7 @@ authors = [
 ]
 dependencies = [
     "pytest",
+    "pytest-cov",
     "pydantic >= 2.0",
     "pyyaml",
 ]
@@ -31,3 +32,6 @@ include = ["aiod_registry*"]
 
 [tool.setuptools.dynamic]
 readme = {file = ["README.md"], content-type = "text/markdown"}
+
+[tool.pytest.ini_options]
+addopts = "--cov=aiod_registry --cov-report=term-missing"

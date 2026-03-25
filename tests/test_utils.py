@@ -84,16 +84,7 @@ def test_load_manifests_basic(temp_manifest_file):
 
 
 def test_flatten_manifest(temp_manifest_file):
-    manifests = load_manifests(paths=[temp_manifest_file])
-    manifest = manifests["cellpose"]
-    flat = flatten_manifest(manifest)
-    # Should have string, not list, for location
-    loc = flat.versions["cyto3"].tasks["cyto"].location
-    assert isinstance(loc, str)
-
-
-def test_flatten_manifest_on_raw(temp_manifest_file):
-    # Load the manifest as raw JSON and instantiate ModelManifest
+    # Instantiate directly from raw JSON so location is still a list pre-flatten
     with open(temp_manifest_file) as f:
         raw_json = json.load(f)
     manifest = ModelManifest(**raw_json)
@@ -104,25 +95,6 @@ def test_flatten_manifest_on_raw(temp_manifest_file):
 
 
 def test_filter_location_and_empty_manifests(temp_manifest_file):
-    # Load the manifest as raw JSON and instantiate ModelManifest
-    with open(temp_manifest_file) as f:
-        raw_json = json.load(f)
-    manifest = ModelManifest(**raw_json)
-    filtered, changed, num_removed = filter_location(manifest)
-    # Only the first location for cyto3 is accessible (URL), cyto2 is not accessible (file path)
-    assert changed is True
-    assert num_removed == 1
-    assert "cyto3" in filtered.versions
-    assert (
-        "cyto2" not in filtered.versions or len(filtered.versions["cyto2"].tasks) == 0
-    )
-    # Now test filter_empty_manifests
-    manifests_dict = {filtered.short_name: filtered}
-    filtered_dict = filter_empty_manifests(manifests_dict)
-    assert filtered.short_name in filtered_dict
-
-
-def test_filter_location_and_empty_manifests_on_raw(temp_manifest_file):
     # Load the manifest as raw JSON and instantiate ModelManifest
     with open(temp_manifest_file) as f:
         raw_json = json.load(f)
@@ -356,7 +328,7 @@ def test_save_all_default_configs_creates_files(tmp_path):
 def test_save_all_default_configs_skips_no_params(tmp_path):
     save_all_default_configs(output_dir=tmp_path)
     yaml_files = list(tmp_path.glob("*.yaml"))
-    # seai_unet defines no params — no file should be written for it
+    # seai_unet defines no params - no file should be written for it
     seai_files = [f for f in yaml_files if "seai_unet" in f.name]
     assert len(seai_files) == 0
 
@@ -391,7 +363,7 @@ def test_params_inherited_flag_model_level():
 
 def test_params_inherited_flag_no_model_params_no_task_params():
     # When neither the manifest nor the task defines params, _params_inherited
-    # must remain False — there is nothing to inherit.
+    # must remain False - there is nothing to inherit.
     manifest = ModelManifest(**MANIFEST_NO_PARAMS)
     task = manifest.versions["v1"].tasks["mito"]
     assert task.params is None
@@ -421,8 +393,8 @@ def test_params_inherited_flag_task_level():
 
 
 def test_save_all_default_configs_task_specific_file(tmp_path):
-    # A manifest with no model-level params but task-specific params
-    # should write a per-task file, not a model-level file
+    # A manifest with no model-level params but task-specific params should
+    # write a per-task file only - no model-level {short_name}.yaml
     manifest_data = {
         "name": "Task Only Model",
         "short_name": "task_only",
@@ -438,22 +410,9 @@ def test_save_all_default_configs_task_specific_file(tmp_path):
             }
         },
     }
-    import json as _json
     manifest_file = tmp_path / "task_only.json"
-    manifest_file.write_text(_json.dumps(manifest_data))
-    save_all_default_configs.__wrapped__ = None  # not wrapped, just call directly
-    # Manually exercise the logic using load_manifests + save
-    from aiod_registry.utils import _params_to_yaml
-    manifest = ModelManifest(**manifest_data)
+    manifest_file.write_text(json.dumps(manifest_data))
     out = tmp_path / "configs"
-    out.mkdir()
-    header = "# Auto-generated\n"
-    # No model-level params — no {short_name}.yaml
-    assert not manifest.params
-    # Task has its own params and _params_inherited is False
-    task = manifest.versions["v1"].tasks["cyto"]
-    assert task._params_inherited is False
-    config_str = _params_to_yaml(task.params)
-    (out / "task_only_v1_cyto.yaml").write_text(header + config_str)
+    save_all_default_configs(output_dir=out, paths=[manifest_file])
     assert (out / "task_only_v1_cyto.yaml").exists()
     assert not (out / "task_only.yaml").exists()
