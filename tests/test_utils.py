@@ -389,6 +389,15 @@ def test_params_inherited_flag_model_level():
     assert task._params_inherited is True
 
 
+def test_params_inherited_flag_no_model_params_no_task_params():
+    # When neither the manifest nor the task defines params, _params_inherited
+    # must remain False — there is nothing to inherit.
+    manifest = ModelManifest(**MANIFEST_NO_PARAMS)
+    task = manifest.versions["v1"].tasks["mito"]
+    assert task.params is None
+    assert task._params_inherited is False
+
+
 def test_params_inherited_flag_task_level():
     # When a task defines its own params, _params_inherited should remain False
     manifest_data = {

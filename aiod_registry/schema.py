@@ -221,7 +221,7 @@ class ModelManifest(StrictModel):
     def fill_empty_params(self):
         for version in self.versions.values():
             for task in version.tasks.values():
-                if task.params is None:
+                if task.params is None and self.params is not None:
                     task.params = self.params
                     task._params_inherited = True
         return self
