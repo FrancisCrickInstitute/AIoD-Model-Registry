@@ -224,14 +224,17 @@ def save_all_default_configs(output_dir: Union[Path, str] = "default_configs") -
 
 
 def _gen_configs_cli() -> None:
-    """Console script entry point for ``aiod-gen-configs``.
-
-    Usage::
-
-        aiod-gen-configs [output_dir]
-
-    If ``output_dir`` is omitted, defaults to ``./default_configs``.
-    """
-    import sys
-    output_dir = sys.argv[1] if len(sys.argv) > 1 else "default_configs"
-    save_all_default_configs(output_dir=output_dir)
+    """Console script entry point for ``aiod-gen-configs``."""
+    import argparse
+    parser = argparse.ArgumentParser(
+        prog="aiod-gen-configs",
+        description="Generate default parameter config YAML files for all registered models.",
+    )
+    parser.add_argument(
+        "output_dir",
+        nargs="?",
+        default="default_configs",
+        help="Directory to write configs into (default: ./default_configs).",
+    )
+    args = parser.parse_args()
+    save_all_default_configs(output_dir=args.output_dir)
