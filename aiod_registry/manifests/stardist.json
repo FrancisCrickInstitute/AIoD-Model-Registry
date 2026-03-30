@@ -80,6 +80,7 @@
     },
     "versions": {
         "2D_versatile_fluo": {
+            "axes": "YX",
             "tasks": {
                 "nuclei": {
                     "location": "https://github.com/stardist/stardist-models/releases/download/v0.1/python_2D_versatile_fluo.zip"
@@ -87,6 +88,7 @@
             }
         },
         "2D_versatile_he": {
+            "axes": "YX",
             "tasks": {
                 "nuclei": {
                     "location": "https://github.com/stardist/stardist-models/releases/download/v0.1/python_2D_versatile_he.zip"
@@ -94,6 +96,7 @@
             }
         },
         "2D_paper_dsb2018": {
+            "axes": "YX",
             "tasks": {
                 "nuclei": {
                     "location": "https://github.com/stardist/stardist-models/releases/download/v0.1/python_2D_paper_dsb2018.zip"
@@ -101,6 +104,7 @@
             }
         },
         "2D_demo": {
+            "axes": "YX",
             "tasks": {
                 "nuclei": {
                     "location": "https://github.com/stardist/stardist-models/releases/download/v0.1/python_2D_demo.zip"
@@ -108,6 +112,7 @@
             }
         },
         "3D_demo": {
+            "axes": "ZYX",
             "tasks": {
                 "nuclei": {
                     "location": "https://github.com/stardist/stardist-models/releases/download/v0.1/python_3D_demo.zip"
