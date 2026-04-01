@@ -74,6 +74,7 @@ class ModelParam(StrictModel):
     value: ParamValue
     tooltip: Optional[str] = None
     dtype: Optional[str] = None  # Used of default value is None
+    type: Optional[str] = None  # e.g. "channel" for image-aware channel selectors
     _dtype = None  # Determined from value if given
 
     @model_validator(mode="after")

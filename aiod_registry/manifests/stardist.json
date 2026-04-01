@@ -168,6 +168,13 @@
             "value": null,
             "dtype": "float",
             "tooltip": "Optional scaling factor for the input image. Can be used to match the resolution of training data."
+        },
+        {
+            "name": "Channel Index",
+            "arg_name": "channel_idx",
+            "value": 0,
+            "type": "channel",
+            "tooltip": "Select which channel StarDist should use when it needs to extract a single channel from multi-channel input data. Ignored for grayscale inputs and for model variants that consume multi-channel images directly."
         }
     ]
 }
