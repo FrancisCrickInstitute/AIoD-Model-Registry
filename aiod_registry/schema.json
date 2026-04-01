@@ -330,24 +330,6 @@
           "default": null,
           "title": "Params"
         },
-        "location_type": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "items": {
-                "type": "string"
-              },
-              "type": "array"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Location Type"
-        },
         "metadata": {
           "anyOf": [
             {

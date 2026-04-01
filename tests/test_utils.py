@@ -1,17 +1,18 @@
-import os
-import tempfile
-import shutil
-import pytest
 import json
-from pathlib import Path
+import os
+import sys
+
+import pytest
+from pydantic import ValidationError
+
+from aiod_registry.schema import ModelManifest, ModelParam
 from aiod_registry.utils import (
-    load_manifests,
-    flatten_manifest,
-    filter_location,
     filter_empty_manifests,
+    filter_location,
+    flatten_manifest,
     is_accessible,
+    load_manifests,
 )
-from aiod_registry.schema import ModelManifest
 
 # Example manifest data (based on cellpose.json)
 EXAMPLE_MANIFEST = {
@@ -152,7 +153,6 @@ def test_filter_location_no_change(tmp_path):
                             "https://example.com/model1",
                             "https://example.com/model2",
                         ],
-                        "location_type": ["url", "url"],
                     }
                 }
             }
@@ -187,3 +187,64 @@ def test_is_accessible_with_tempfile(tmp_path):
     assert is_accessible(str(real_file))
     # Nonexistent file in tmp_path
     assert not is_accessible(str(tmp_path / "doesnotexist.txt"))
+
+
+@pytest.mark.skipif(
+    sys.platform == "win32" or os.getuid() == 0,
+    reason="Cannot restrict permissions on Windows or as root",
+)
+def test_is_accessible_permission_denied(tmp_path):
+    # Reproduce: file exists but os.stat raises EACCES (errno 13) because the
+    # parent directory has its execute/search bit removed.
+    # In Python 3.12+, Path.exists() only suppresses ENOENT/ENOTDIR/EBADF/ELOOP;
+    # EACCES propagates, so is_accessible raises PermissionError instead of
+    # returning False.
+    subdir = tmp_path / "restricted"
+    subdir.mkdir()
+    model_file = subdir / "model.pt"
+    model_file.write_text("fake model weights")
+
+    # Confirm the file is accessible before we restrict it
+    assert is_accessible(str(model_file))
+
+    # Remove execute (search) bit from the parent directory so that any
+    # os.stat() on a path inside it raises PermissionError (errno 13)
+    subdir.chmod(0o666)
+    try:
+        # Bug: PermissionError propagates out of is_accessible instead of
+        # being caught and returning False
+        result = is_accessible(str(model_file))
+        assert result is False
+    finally:
+        # Restore permissions so that pytest's tmp_path cleanup can delete the dir
+        subdir.chmod(0o755)
+
+
+class TestModelParamDefault:
+    def test_list_no_default_uses_first(self):
+        """Without `default`, the first list item determines dtype and is the implicit default."""
+        p = ModelParam(name="mode", value=["fast", "slow", "accurate"])
+        assert p.default is None
+        assert p._dtype is str
+
+    def test_list_default_non_first_item(self):
+        """Setting `default` to a non-first list item is accepted and reflected in _dtype."""
+        p = ModelParam(name="mode", value=["fast", "slow", "accurate"], default="accurate")
+        assert p.default == "accurate"
+        assert p._dtype is str
+
+    def test_list_default_int(self):
+        """Integer default picks the correct dtype."""
+        p = ModelParam(name="level", value=[1, 2, 3], default=3)
+        assert p.default == 3
+        assert p._dtype is int
+
+    def test_default_not_in_list_raises(self):
+        """A `default` value that is not in the choices list must raise a ValidationError."""
+        with pytest.raises(ValidationError, match="not in the choices list"):
+            ModelParam(name="mode", value=["fast", "slow"], default="medium")
+
+    def test_default_on_scalar_raises(self):
+        """`default` is only valid for list values; a scalar value must raise a ValidationError."""
+        with pytest.raises(ValidationError, match="only be set when `value` is a list"):
+            ModelParam(name="thresh", value=0.5, default=0.5)
