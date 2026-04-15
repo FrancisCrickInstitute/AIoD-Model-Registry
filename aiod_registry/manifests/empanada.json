@@ -145,5 +145,6 @@
         "arg_name": "allow_one_view",
         "value": false,
         "tooltip": "Whether to allow objects that are only segmented in a single plane (XY, XZ, or YZ) to be included in the final consensus segmentation. Only applies to 3D/'All'."
+    }
   ]
 }
