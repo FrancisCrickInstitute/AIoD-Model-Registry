@@ -228,8 +228,29 @@
               "type": "null"
             }
           ],
-          "description": "Default parameter value. If a list, the parameters will be treated as dropdown choices, where the first is the default. The type of the first element will be used to determine the type of the parameter.",
+          "description": "Default parameter value. If a list, the parameters will be treated as dropdown choices. Use the `default` field on ModelParam to specify which item is selected by default (otherwise the first item is used). The type of the default (or first) element determines the parameter type.",
           "title": "Value"
+        },
+        "default": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "integer"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Default"
         },
         "tooltip": {
           "anyOf": [
@@ -266,6 +287,20 @@
     "ModelVersion": {
       "additionalProperties": false,
       "properties": {
+        "base_model": {
+          "anyOf": [
+            {
+              "maxLength": 50,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Base Model"
+        },
         "tasks": {
           "patternProperties": {
             "^(?i:mito|er|ne|everything|nuclei|cyto|drop|boundaries)$": {
@@ -343,24 +378,6 @@
           ],
           "default": null,
           "title": "Params"
-        },
-        "location_type": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "items": {
-                "type": "string"
-              },
-              "type": "array"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Location Type"
         },
         "finetuning_meta_data": {
           "anyOf": [

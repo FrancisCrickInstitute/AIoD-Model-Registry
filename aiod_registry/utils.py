@@ -151,25 +151,21 @@ def add_model_local(
     location: str,
     manifest_name: str,
     finetuning_meta_data: dict,
+    base_model: str,
 ):
     for path in get_manifest_paths():
         if path.name == manifest_name + ".json":
             with open(path, "r") as f:
                 json_manifest = json.load(f)
-            # DEBUG
-            versions = json_manifest["versions"]
-            print(f"versions: {versions}")
             json_manifest["versions"][model_name] = {
+                "base_model": base_model,
                 "tasks": {
                     model_task: {
                         "location": location,
                         "finetuning_meta_data": finetuning_meta_data,
                     }
-                }
+                },
             }
             with open(path, "w") as f:
                 json.dump(json_manifest, f, indent=4)
             break
-
-
-# add_model_local("finetuned_model", "mito", "some/location/", "empanada")

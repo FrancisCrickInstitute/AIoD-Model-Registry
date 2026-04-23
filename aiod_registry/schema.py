@@ -205,6 +205,7 @@ class ModelVersionTask(StrictModel):
 
 
 class ModelVersion(StrictModel):
+    base_model: Optional[ModelName] = None
     tasks: dict[Task, ModelVersionTask]
     metadata: Optional[Metadata] = None
 

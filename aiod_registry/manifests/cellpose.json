@@ -66,6 +66,7 @@
     },
     "versions": {
         "cyto3": {
+            "base_model": "cyto3",
             "tasks": {
                 "cyto": {
                     "location": "https://www.cellpose.org/models/cyto3",
@@ -80,6 +81,7 @@
             }
         },
         "nuclei": {
+            "base_model": "nuclei",
             "tasks": {
                 "nuclei": {
                     "location": "https://www.cellpose.org/models/nucleitorch_0",
@@ -94,6 +96,7 @@
             }
         },
         "cyto1": {
+            "base_model": "cyto1",
             "tasks": {
                 "cyto": {
                     "location": "https://www.cellpose.org/models/cytotorch_0",
@@ -108,6 +111,7 @@
             }
         },
         "cyto2": {
+            "base_model": "cyto2",
             "tasks": {
                 "cyto": {
                     "location": "https://www.cellpose.org/models/cyto2torch_0",
