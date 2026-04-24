@@ -4,6 +4,7 @@ from typing import Optional, Union
 from urllib.parse import urlparse
 
 from aiod_registry import ModelManifest
+from aiod_registry.schema import ModelVersion
 
 
 def get_manifest_paths():
@@ -103,15 +104,43 @@ def filter_empty_manifests(
 def load_manifests(
     paths: Optional[list[Union[Path, str]]] = None,
     filter_access: bool = False,
+    cache_dir: str | Path = None,
 ) -> dict[str, ModelManifest]:
     if paths is None:
         paths = get_manifest_paths()
+    # Default cache_dir to the standard aiod_cache location
+    if cache_dir is None:
+        cache_dir = Path.home() / ".nextflow" / "aiod" / "aiod_cache"
     manifests = {}
     for path in paths:
         with open(path, "r") as f:
             json_manifest = json.load(f)
             manifest = ModelManifest(**json_manifest)
             manifests[manifest.short_name] = manifest
+
+    # Load and aggregate local manifests from cache.
+    # Local manifest files contain only a dict of versions (no top-level
+    # manifest metadata), keyed by version name. The filename stem must
+    # match the `short_name` of a globally-loaded manifest.
+    if cache_dir:
+        local_manifests_dir = Path(cache_dir) / "local_manifests"
+        if local_manifests_dir.exists():
+            for local_path in local_manifests_dir.glob("*.json"):
+                short_name = local_path.stem
+                if short_name not in manifests:
+                    print(
+                        f"Skipping local manifest {local_path.name}: "
+                        f"no base manifest '{short_name}' found."
+                    )
+                    continue
+                with open(local_path, "r") as f:
+                    local_versions = json.load(f)
+                # Validate and merge each version into the base manifest
+                for v_name, v_data in local_versions.items():
+                    manifests[short_name].versions[v_name] = ModelVersion(
+                        **v_data
+                    )
+
     # Remove those model versions that are not accessible (if a path is provided)
     if filter_access:
         # Track how many versions are removed
