@@ -1,5 +1,5 @@
-from pathlib import Path
 import json
+from pathlib import Path
 from typing import Optional, Union
 from urllib.parse import urlparse
 
@@ -8,9 +8,9 @@ import yaml
 from aiod_registry import ModelManifest
 
 
-def get_manifest_paths():
+def get_manifest_paths() -> list[Path]:
     json_dir = Path(__file__).parent.parent / "aiod_registry" / "manifests"
-    return json_dir.glob("*.json")
+    return list(json_dir.glob("*.json"))
 
 
 def is_accessible(location: str | None) -> bool:
@@ -57,7 +57,7 @@ def filter_location(manifest: ModelManifest) -> tuple[ModelManifest, bool, int]:
     for v_name, version in manifest.versions.items():
         for task_name, task in version.tasks.items():
             # Check model config path and flatten
-            for fpath in task.config_path:
+            for fpath in task.config_path:  # type: ignore[union-attr]
                 if is_accessible(fpath):
                     res = fpath
                     break
@@ -152,10 +152,14 @@ def _params_to_yaml(params: list) -> str:
     defaults = {}
     for param in params:
         if isinstance(param.value, list):
-            defaults[param.arg_name] = param.default if param.default is not None else param.value[0]
+            defaults[param.arg_name] = (
+                param.default if param.default is not None else param.value[0]
+            )
         else:
             defaults[param.arg_name] = param.value
-    return yaml.safe_dump(defaults, sort_keys=False, default_flow_style=False, allow_unicode=True)
+    return yaml.safe_dump(
+        defaults, sort_keys=False, default_flow_style=False, allow_unicode=True
+    )
 
 
 def generate_default_config(manifest: ModelManifest, version: str, task: str) -> str:
@@ -217,7 +221,9 @@ def save_all_default_configs(
                 if task_obj._params_inherited:
                     continue  # Already covered by the model-level config
                 if not task_obj.params:
-                    print(f"Skipping {manifest.short_name}/{version_name}/{task_name} — no params defined.")
+                    print(
+                        f"Skipping {manifest.short_name}/{version_name}/{task_name} — no params defined."
+                    )
                     continue
                 config_str = _params_to_yaml(task_obj.params)
                 safe_version = version_name.replace(" ", "_")
@@ -232,6 +238,7 @@ def save_all_default_configs(
 def _gen_configs_cli() -> None:
     """Console script entry point for ``aiod-gen-configs``."""
     import argparse
+
     parser = argparse.ArgumentParser(
         prog="aiod-gen-configs",
         description="Generate default parameter config YAML files for all registered models.",
