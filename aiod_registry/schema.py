@@ -73,6 +73,7 @@ class ModelParam(StrictModel):
     default: Optional[Union[str, int, float, bool]] = None  # Override default for list values
     tooltip: Optional[str] = None
     dtype: Optional[str] = None  # Used of default value is None
+    type: Optional[str] = None  # e.g. "channel" for image-aware channel selectors
     _dtype = None  # Determined from value if given
 
     @model_validator(mode="after")
@@ -197,6 +198,10 @@ class ModelVersionTask(StrictModel):
 
 
 class ModelVersion(StrictModel):
+    axes: Optional[str] = Field(
+        None,
+        description="Axes specification for the model (e.g., 'YX' for 2D, 'ZYX' for 3D, 'YXC' or 'CZYX' with channels)",
+    )
     tasks: dict[Task, ModelVersionTask]
     metadata: Optional[Metadata] = None
 
