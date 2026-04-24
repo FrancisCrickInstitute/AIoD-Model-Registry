@@ -2,7 +2,7 @@ import builtins
 from pathlib import Path
 from typing import Optional, Union
 
-from pydantic import BaseModel, ConfigDict, Field, model_validator, AnyUrl
+from pydantic import BaseModel, ConfigDict, Field, model_validator, AnyUrl, PrivateAttr
 from typing_extensions import Annotated
 
 TASK_NAMES = {
@@ -183,6 +183,7 @@ class ModelVersionTask(StrictModel):
     config_path: Optional[Union[str, list[str]]] = None
     params: Optional[list[ModelParam]] = None
     metadata: Optional[Metadata] = None
+    _params_inherited: bool = PrivateAttr(default=False)
 
     @model_validator(mode="after")
     def get_config_path(self):
@@ -202,7 +203,7 @@ class ModelVersion(StrictModel):
 
 class ModelManifest(StrictModel):
     name: str = Field(..., min_length=1, max_length=50)
-    short_name: Optional[str] = None
+    short_name: str = ""
     versions: dict[ModelName, ModelVersion]
     params: Optional[list[ModelParam]] = None
     config: Optional[Path] = None
@@ -211,7 +212,7 @@ class ModelManifest(StrictModel):
 
     @model_validator(mode="after")
     def create_short_name(self):
-        if self.short_name is None:
+        if not self.short_name:
             self.short_name = shorten_name(self.name)
         return self
 
@@ -220,8 +221,9 @@ class ModelManifest(StrictModel):
     def fill_empty_params(self):
         for version in self.versions.values():
             for task in version.tasks.values():
-                if task.params is None:
+                if task.params is None and self.params is not None:
                     task.params = self.params
+                    task._params_inherited = True
         return self
 
 
