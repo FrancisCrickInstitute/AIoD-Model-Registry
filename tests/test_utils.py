@@ -370,6 +370,19 @@ def test_params_inherited_flag_no_model_params_no_task_params():
     assert task._params_inherited is False
 
 
+def test_short_name_auto_derived_from_name():
+    """If short_name is omitted, the validator derives it from name."""
+    manifest_data = {
+        "name": "My Cool Model",
+        "metadata": {"description": "Test"},
+        "versions": {
+            "v1": {"tasks": {"cyto": {"location": "https://example.com/model"}}}
+        },
+    }
+    manifest = ModelManifest(**manifest_data)
+    assert manifest.short_name == "my_cool_model"
+
+
 def test_params_inherited_flag_task_level():
     # When a task defines its own params, _params_inherited should remain False
     manifest_data = {

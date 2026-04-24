@@ -203,7 +203,7 @@ class ModelVersion(StrictModel):
 
 class ModelManifest(StrictModel):
     name: str = Field(..., min_length=1, max_length=50)
-    short_name: Optional[str] = None
+    short_name: str = ""
     versions: dict[ModelName, ModelVersion]
     params: Optional[list[ModelParam]] = None
     config: Optional[Path] = None
@@ -212,7 +212,7 @@ class ModelManifest(StrictModel):
 
     @model_validator(mode="after")
     def create_short_name(self):
-        if self.short_name is None:
+        if not self.short_name:
             self.short_name = shorten_name(self.name)
         return self
 
