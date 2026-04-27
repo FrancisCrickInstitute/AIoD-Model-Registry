@@ -2,6 +2,7 @@ from pathlib import Path
 import json
 from typing import Optional, Union
 from urllib.parse import urlparse
+from pydantic import ValidationError
 
 from aiod_registry import ModelManifest
 from aiod_registry.schema import ModelVersion
@@ -135,11 +136,20 @@ def load_manifests(
                     continue
                 with open(local_path, "r") as f:
                     local_versions = json.load(f)
-                # Merge local versions, propagating manifest-level params
-                # (the `fill_empty_params` validator has already run).
                 manifest_params = manifests[short_name].params
                 for v_name, v_data in local_versions.items():
-                    new_version = ModelVersion(**v_data)
+                    try:
+                        new_version = ModelVersion(**v_data)
+                    except ValidationError as e:
+                        raise ValueError(
+                            "Mismatch between your local model registry and the global model registry. "
+                            "Your local manifest was likely written against an older schema. "
+                            "If the cause is unclear, please raise an issue on GitHub and attach the details below.\n"
+                            f"Local manifest file: {local_path}\n"
+                            f"Version key: {v_name!r}\n"
+                            f"Stored data: {v_data}\n"
+                            f"Validation errors: {e.errors()}"
+                        ) from e
                     for task in new_version.tasks.values():
                         if task.params is None:
                             task.params = manifest_params
