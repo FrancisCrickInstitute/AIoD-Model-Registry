@@ -137,9 +137,7 @@ def load_manifests(
                     local_versions = json.load(f)
                 # Validate and merge each version into the base manifest
                 for v_name, v_data in local_versions.items():
-                    manifests[short_name].versions[v_name] = ModelVersion(
-                        **v_data
-                    )
+                    manifests[short_name].versions[v_name] = ModelVersion(**v_data)
 
     # Remove those model versions that are not accessible (if a path is provided)
     if filter_access:
@@ -181,20 +179,33 @@ def add_model_local(
     manifest_name: str,
     finetuning_meta_data: dict,
     base_model: str,
+    cache_dir: Path | str,
 ):
-    for path in get_manifest_paths():
-        if path.name == manifest_name + ".json":
-            with open(path, "r") as f:
-                json_manifest = json.load(f)
-            json_manifest["versions"][model_name] = {
-                "base_model": base_model,
-                "tasks": {
-                    model_task: {
-                        "location": location,
-                        "finetuning_meta_data": finetuning_meta_data,
-                    }
-                },
+    """
+    Saves the finetuned model to local cache of finetuned models
+    """
+    print("[DEBUG] adding model to local model regsitry")
+    local_manifests_dir = Path(cache_dir) / "local_manifests"
+    local_manifests_dir.mkdir(parents=True, exist_ok=True)
+    local_path = local_manifests_dir / (manifest_name + ".json")
+
+    if local_path.exists():
+        with open(local_path, "r") as f:
+            local_data = json.load(f)
+    else:
+        local_data = {}
+
+    local_data[model_name] = {
+        "base_model": base_model,
+        "tasks": {
+            model_task: {
+                "location": location,
+                "finetuning_meta_data": finetuning_meta_data,
             }
-            with open(path, "w") as f:
-                json.dump(json_manifest, f, indent=4)
-            break
+        },
+    }
+    print("[DEBUG]", local_data)
+
+    with open(local_path, "w") as f:
+        json.dump(local_data, f, indent=2)
+    print("[DEBUG] Saved model to model reg")
