@@ -135,9 +135,15 @@ def load_manifests(
                     continue
                 with open(local_path, "r") as f:
                     local_versions = json.load(f)
-                # Validate and merge each version into the base manifest
+                # Merge local versions, propagating manifest-level params
+                # (the `fill_empty_params` validator has already run).
+                manifest_params = manifests[short_name].params
                 for v_name, v_data in local_versions.items():
-                    manifests[short_name].versions[v_name] = ModelVersion(**v_data)
+                    new_version = ModelVersion(**v_data)
+                    for task in new_version.tasks.values():
+                        if task.params is None:
+                            task.params = manifest_params
+                    manifests[short_name].versions[v_name] = new_version
 
     # Remove those model versions that are not accessible (if a path is provided)
     if filter_access:
@@ -184,7 +190,6 @@ def add_model_local(
     """
     Saves the finetuned model to local cache of finetuned models
     """
-    print("[DEBUG] adding model to local model regsitry")
     local_manifests_dir = Path(cache_dir) / "local_manifests"
     local_manifests_dir.mkdir(parents=True, exist_ok=True)
     local_path = local_manifests_dir / (manifest_name + ".json")
@@ -204,8 +209,7 @@ def add_model_local(
             }
         },
     }
-    print("[DEBUG]", local_data)
 
     with open(local_path, "w") as f:
         json.dump(local_data, f, indent=2)
-    print("[DEBUG] Saved model to model reg")
+    print("Saved model to local model registry", str(local_manifests_dir))
