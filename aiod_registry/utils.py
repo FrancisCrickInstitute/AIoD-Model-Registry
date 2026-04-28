@@ -153,6 +153,15 @@ def load_manifests(
                     for task in new_version.tasks.values():
                         if task.params is None:
                             task.params = manifest_params
+                    if v_name in manifests[short_name].versions:
+                        raise ValueError(
+                            "Local manifest version collides with an existing global version. "
+                            "Refusing to overwrite an existing version entry.\n"
+                            f"Local manifest file: {local_path}\n"
+                            f"Manifest short_name: {short_name!r}\n"
+                            f"Conflicting version key: {v_name!r}\n"
+                            "Please rename or remove the local version entry."
+                        )
                     manifests[short_name].versions[v_name] = new_version
 
     # Remove those model versions that are not accessible (if a path is provided)
