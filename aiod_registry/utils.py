@@ -136,6 +136,11 @@ def load_manifests(
                     continue
                 with open(local_path, "r") as f:
                     local_versions = json.load(f)
+                if not isinstance(local_versions, dict):
+                    raise ValueError(
+                        f"Invalid local manifest format in {local_path}: "
+                        "expected a JSON object mapping version names to version data."
+                    )
                 manifest_params = manifests[short_name].params
                 for v_name, v_data in local_versions.items():
                     try:
