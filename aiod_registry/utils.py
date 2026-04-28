@@ -234,6 +234,9 @@ def add_model_local(
         },
     }
 
+    # Validate the data before saving to local registry
+    ModelVersion(**local_data[model_name])
+
     with open(local_path, "w") as f:
         json.dump(local_data, f, indent=2)
     print("Saved model to local model registry", str(local_manifests_dir))
