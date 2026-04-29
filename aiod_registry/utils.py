@@ -2,10 +2,12 @@ import json
 from pathlib import Path
 from typing import Optional, Union
 from urllib.parse import urlparse
+from pydantic import ValidationError
 
 import yaml
 
 from aiod_registry import ModelManifest
+from aiod_registry.schema import ModelVersion
 
 
 def get_manifest_paths() -> list[Path]:
@@ -105,15 +107,70 @@ def filter_empty_manifests(
 def load_manifests(
     paths: Optional[list[Union[Path, str]]] = None,
     filter_access: bool = False,
+    cache_dir: str | Path | None = None,
 ) -> dict[str, ModelManifest]:
     if paths is None:
         paths = get_manifest_paths()
+    # Default cache_dir to the standard aiod_cache location
+    if cache_dir is None:
+        cache_dir = Path.home() / ".nextflow" / "aiod" / "aiod_cache"
     manifests = {}
     for path in paths:
         with open(path, "r") as f:
             json_manifest = json.load(f)
             manifest = ModelManifest(**json_manifest)
             manifests[manifest.short_name] = manifest
+
+    # Load and aggregate local manifests from cache.
+    # Local manifest files contain only a dict of versions (no top-level
+    # manifest metadata), keyed by version name. The filename stem must
+    # match the `short_name` of a globally-loaded manifest.
+    if cache_dir:
+        local_manifests_dir = Path(cache_dir) / "local_manifests"
+        if local_manifests_dir.exists():
+            for local_path in local_manifests_dir.glob("*.json"):
+                short_name = local_path.stem
+                if short_name not in manifests:
+                    print(
+                        f"Skipping local manifest {local_path.name}: "
+                        f"no base manifest '{short_name}' found."
+                    )
+                    continue
+                with open(local_path, "r") as f:
+                    local_versions = json.load(f)
+                if not isinstance(local_versions, dict):
+                    raise ValueError(
+                        f"Invalid local manifest format in {local_path}: "
+                        "expected a JSON object mapping version names to version data."
+                    )
+                manifest_params = manifests[short_name].params
+                for v_name, v_data in local_versions.items():
+                    try:
+                        new_version = ModelVersion(**v_data)
+                    except ValidationError as e:
+                        raise ValueError(
+                            "Mismatch between your local model registry and the global model registry. "
+                            "Your local manifest was likely written against an older schema. "
+                            "If the cause is unclear, please raise an issue on GitHub and attach the details below.\n"
+                            f"Local manifest file: {local_path}\n"
+                            f"Version key: {v_name!r}\n"
+                            f"Stored data: {v_data}\n"
+                            f"Validation errors: {e.errors()}"
+                        ) from e
+                    for task in new_version.tasks.values():
+                        if task.params is None:
+                            task.params = manifest_params
+                    if v_name in manifests[short_name].versions:
+                        raise ValueError(
+                            "Local manifest version collides with an existing global version. "
+                            "Refusing to overwrite an existing version entry.\n"
+                            f"Local manifest file: {local_path}\n"
+                            f"Manifest short_name: {short_name!r}\n"
+                            f"Conflicting version key: {v_name!r}\n"
+                            "Please rename or remove the local version entry."
+                        )
+                    manifests[short_name].versions[v_name] = new_version
+
     # Remove those model versions that are not accessible (if a path is provided)
     if filter_access:
         # Track how many versions are removed
@@ -145,6 +202,51 @@ def load_manifests(
     else:
         # We still want to flatten the manifests for consistency
         return {k: flatten_manifest(v) for k, v in manifests.items()}
+
+
+def save_manifest(data: dict, path: Path | str) -> None:
+    """Save manifest data as JSON to the given path."""
+    with open(path, "w") as f:
+        json.dump(data, f, indent=2)
+
+
+def add_model_local(
+    model_name: str,
+    model_task: str,
+    location: str,
+    manifest_name: str,
+    finetuning_meta_data: dict,
+    base_model: str,
+    cache_dir: Path | str,
+):
+    """
+    Saves the finetuned model to local cache of finetuned models
+    """
+    local_manifests_dir = Path(cache_dir) / "local_manifests"
+    local_manifests_dir.mkdir(parents=True, exist_ok=True)
+    local_path = local_manifests_dir / (manifest_name + ".json")
+
+    if local_path.exists():
+        with open(local_path, "r") as f:
+            local_data = json.load(f)
+    else:
+        local_data = {}
+
+    local_data[model_name] = {
+        "base_model": base_model,
+        "tasks": {
+            model_task: {
+                "location": location,
+                "finetuning_meta_data": finetuning_meta_data,
+            }
+        },
+    }
+
+    # Validate the data before saving to local registry
+    ModelVersion(**local_data[model_name])
+
+    save_manifest(local_data, local_path)
+    print("Saved model to local model registry", str(local_manifests_dir))
 
 
 def _params_to_yaml(params: list) -> str:

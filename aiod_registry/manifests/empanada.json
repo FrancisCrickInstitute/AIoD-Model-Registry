@@ -1,67 +1,67 @@
 {
-    "name": "Empanada",
-    "metadata": {
-      "description": "Empanada contains segmentation models for mitochondria, nuclei, and lipid droplets in EM images.",
-      "authors": [
-        {
-          "name": "Ryan Conrad",
-          "affiliation": "Center for Molecular Microscopy, Center for Cancer Research, National Cancer Institute, National Institutes of Health, Bethesda, MD 20892, USA"
-        },
-        {
-          "name": "Kedar Narayan",
-          "affiliation": "Center for Molecular Microscopy, Center for Cancer Research, National Cancer Institute, National Institutes of Health, Bethesda, MD 20892, USA"
-        }
-      ],
-      "pubs": [
-        {
-          "title": "Instance segmentation of mitochondria in electron microscopy images with a generalist deep learning model trained on a diverse dataset",
-          "info": "Main paper that describes model & data",
-          "url": "https://doi.org/10.1016/j.cels.2022.12.006"
-        }
-      ]
-    },
-    "versions": {
-      "MitoNet v1": {
-        "tasks": {
-          "mito": {
-            "location": "https://zenodo.org/record/6861565/files/MitoNet_v1.pth?download=1"
-          }
-        }
+  "name": "Empanada",
+  "metadata": {
+    "description": "Empanada contains segmentation models for mitochondria, nuclei, and lipid droplets in EM images.",
+    "authors": [
+      {
+        "name": "Ryan Conrad",
+        "affiliation": "Center for Molecular Microscopy, Center for Cancer Research, National Cancer Institute, National Institutes of Health, Bethesda, MD 20892, USA"
       },
-      "MitoNet Mini v1": {
-        "tasks": {
-          "mito": {
-            "location": "https://zenodo.org/record/6861565/files/MitoNet_v1_mini.pth?download=1"
-          }
-        }
-      },
-      "NucleoNet v1": {
-        "tasks": {
-          "nuclei": {
-            "location": "https://zenodo.org/records/15298854/files/PanopticDeepLabPR_663ba73a-0908-4f7d-b59e-88a2d3ea2e39_panoptic_deeplab_pointrend.pth?download=1"
-          }
-        }
-      },
-      "DropNet v1": {
-        "tasks": {
-          "drop": {
-            "location": "https://zenodo.org/records/15298854/files/PanopticDeepLabPR_b0d99498-6c99-4b45-844e-2b4dca58f24a_panoptic_deeplab_pointrend.pth?download=1"
-          }
+      {
+        "name": "Kedar Narayan",
+        "affiliation": "Center for Molecular Microscopy, Center for Cancer Research, National Cancer Institute, National Institutes of Health, Bethesda, MD 20892, USA"
+      }
+    ],
+    "pubs": [
+      {
+        "title": "Instance segmentation of mitochondria in electron microscopy images with a generalist deep learning model trained on a diverse dataset",
+        "info": "Main paper that describes model & data",
+        "url": "https://doi.org/10.1016/j.cels.2022.12.006"
+      }
+    ]
+  },
+  "versions": {
+    "MitoNet v1": {
+      "tasks": {
+        "mito": {
+          "location": "https://zenodo.org/record/6861565/files/MitoNet_v1.pth?download=1"
         }
       }
     },
-    "params": [
+    "MitoNet Mini v1": {
+      "tasks": {
+        "mito": {
+          "location": "https://zenodo.org/record/6861565/files/MitoNet_v1_mini.pth?download=1"
+        }
+      }
+    },
+    "NucleoNet v1": {
+      "tasks": {
+        "nuclei": {
+          "location": "https://zenodo.org/records/15298854/files/PanopticDeepLabPR_663ba73a-0908-4f7d-b59e-88a2d3ea2e39_panoptic_deeplab_pointrend.pth?download=1"
+        }
+      }
+    },
+    "DropNet v1": {
+      "tasks": {
+        "drop": {
+          "location": "https://zenodo.org/records/15298854/files/PanopticDeepLabPR_b0d99498-6c99-4b45-844e-2b4dca58f24a_panoptic_deeplab_pointrend.pth?download=1"
+        }
+      }
+    }
+  },
+  "params": [
     {
-        "name": "Plane",
-        "arg_name": "plane",
-        "value": ["XY", "XZ", "YZ", "All"],
-        "tooltip": "Whether to use all planes (XY, XZ, YZ) or a single plane"
+      "name": "Plane",
+      "arg_name": "plane",
+      "value": ["XY", "XZ", "YZ", "All"],
+      "tooltip": "Whether to use all planes (XY, XZ, YZ) or a single plane"
     },
     {
-        "name": "Downsampling",
-        "arg_name": "downsampling",
-        "value": [1, 2, 4, 8, 16, 32, 64],
-        "tooltip": "Downsampling factor for the input image"
+      "name": "Downsampling",
+      "arg_name": "downsampling",
+      "value": [1, 2, 4, 8, 16, 32, 64],
+      "tooltip": "Downsampling factor for the input image"
     },
     {
         "name": "Segmentation threshold",
@@ -136,5 +136,5 @@
         "value": false,
         "tooltip": "Whether to allow objects that are only segmented in a single plane (XY, XZ, or YZ) to be included in the final consensus segmentation. Only applies to 3D/'All'."
     }
-    ]
-  }
+  ]
+}

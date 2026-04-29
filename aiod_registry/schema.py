@@ -70,7 +70,9 @@ class ModelParam(StrictModel):
     name: ParamName
     arg_name: Optional[str] = None
     value: ParamValue
-    default: Optional[Union[str, int, float, bool]] = None  # Override default for list values
+    default: Optional[Union[str, int, float, bool]] = (
+        None  # Override default for list values
+    )
     tooltip: Optional[str] = None
     dtype: Optional[str] = None  # Used of default value is None
     _dtype = None  # Determined from value if given
@@ -175,6 +177,12 @@ class Metadata(StrictModel):
         return f"Description: {self.description}\n{misc_info if len(misc_info) > 0 else ''}{all_pubs}"
 
 
+class FinetuningMeta(StrictModel):
+    config_file_location: str
+    patch_size_divisor: int
+    avail_layers: list[str]
+
+
 class ModelVersionTask(StrictModel):
     location: Union[str, list[str]] = Field(
         ...,
@@ -182,6 +190,7 @@ class ModelVersionTask(StrictModel):
     )
     config_path: Optional[Union[str, list[str]]] = None
     params: Optional[list[ModelParam]] = None
+    finetuning_meta_data: Optional[FinetuningMeta] = None
     metadata: Optional[Metadata] = None
     _params_inherited: bool = PrivateAttr(default=False)
 
@@ -197,6 +206,7 @@ class ModelVersionTask(StrictModel):
 
 
 class ModelVersion(StrictModel):
+    base_model: Optional[ModelName] = None
     tasks: dict[Task, ModelVersionTask]
     metadata: Optional[Metadata] = None
 
