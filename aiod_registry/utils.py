@@ -202,6 +202,12 @@ def load_manifests(
         return {k: flatten_manifest(v) for k, v in manifests.items()}
 
 
+def save_manifest(data: dict, path: Path | str) -> None:
+    """Save manifest data as JSON to the given path."""
+    with open(path, "w") as f:
+        json.dump(data, f, indent=2)
+
+
 def add_model_local(
     model_name: str,
     model_task: str,
@@ -237,6 +243,5 @@ def add_model_local(
     # Validate the data before saving to local registry
     ModelVersion(**local_data[model_name])
 
-    with open(local_path, "w") as f:
-        json.dump(local_data, f, indent=2)
+    save_manifest(local_data, local_path)
     print("Saved model to local model registry", str(local_manifests_dir))
