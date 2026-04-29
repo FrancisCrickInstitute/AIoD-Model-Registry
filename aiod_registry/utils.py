@@ -105,7 +105,7 @@ def filter_empty_manifests(
 def load_manifests(
     paths: Optional[list[Union[Path, str]]] = None,
     filter_access: bool = False,
-    cache_dir: str | Path = None,
+    cache_dir: str | Path | None = None,
 ) -> dict[str, ModelManifest]:
     if paths is None:
         paths = get_manifest_paths()
