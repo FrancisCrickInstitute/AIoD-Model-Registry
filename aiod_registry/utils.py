@@ -28,26 +28,21 @@ def is_accessible(location: str | None) -> bool:
 
 def flatten_manifest(manifest: ModelManifest) -> ModelManifest:
     """
-    Flatten the manifest by just taking the first location and its type, same for config_path.
+    Flatten the manifest by keeping only the first location entry.
     """
     # Make a deep copy of the manifest
     new_manifest = manifest.model_copy(deep=True)
-    # Just take the first location and its type, same for config_path
+    # Keep only the first (location, config_path) pair for each task
     for v_name, version in manifest.versions.items():
         for task_name, task in version.tasks.items():
-            new_manifest.versions[v_name].tasks[task_name].location = task.location[0]
-            new_manifest.versions[v_name].tasks[task_name].config_path = (
-                task.config_path[0] if task.config_path else None
-            )
+            new_manifest.versions[v_name].tasks[task_name].locations = [task.locations[0]]
     return new_manifest
 
 
 def filter_location(manifest: ModelManifest) -> tuple[ModelManifest, bool, int]:
     """
-    Filter and flatten the location, and config_path fields in the manifest.
-    We take the first accessible location and its type.
-    Then take the first accessible config path.
-    If nothing is accessible, set the fields to None.
+    Filter the locations list to the first accessible (location, config_path) pair.
+    If no entry is accessible, remove the task entirely.
     """
     num = 0
     changed = False
@@ -56,20 +51,9 @@ def filter_location(manifest: ModelManifest) -> tuple[ModelManifest, bool, int]:
     # Loop through the versions and tasks and remove inaccessible ones
     for v_name, version in manifest.versions.items():
         for task_name, task in version.tasks.items():
-            # Check model config path and flatten
-            for fpath in task.config_path:  # type: ignore[union-attr]
-                if is_accessible(fpath):
-                    res = fpath
-                    break
-            else:
-                res = None
-            new_manifest.versions[v_name].tasks[task_name].config_path = res
-            # Check which location is accessible and flatten
-            for i, loc in enumerate(task.location):
-                if is_accessible(loc):
-                    # Store the first accessible location
-                    new_manifest.versions[v_name].tasks[task_name].location = loc
-                    # NOTE: Not including config path here in case not paired order
+            for entry in task.locations:
+                if is_accessible(entry.location):
+                    new_manifest.versions[v_name].tasks[task_name].locations = [entry]
                     break
             # If no location is accessible, remove the task completely
             else:
@@ -140,11 +124,9 @@ def load_manifests(
                 )
             return new_manifests
         else:
-            # NOTE: Locations etc. at least get flattened so we return the new manifests
             return new_manifests
     else:
-        # We still want to flatten the manifests for consistency
-        return {k: flatten_manifest(v) for k, v in manifests.items()}
+        return manifests
 
 
 def _params_to_yaml(params: list) -> str:
