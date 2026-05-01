@@ -26,6 +26,24 @@ def is_accessible(location: str | None) -> bool:
         return True
 
 
+def resolve_version(manifest: ModelManifest, version_input: str) -> str:
+    """Return the registry key for a version given its exact name or slug.
+
+    Tries an exact key match first, then falls back to slug matching.
+    Raises KeyError with a helpful message if neither matches.
+    """
+    if version_input in manifest.versions:
+        return version_input
+    for key, version in manifest.versions.items():
+        if version.slug == version_input:
+            return key
+    available = {k: v.slug for k, v in manifest.versions.items()}
+    raise KeyError(
+        f"Version '{version_input}' not found in manifest '{manifest.name}'. "
+        f"Available versions (name: slug): {available}"
+    )
+
+
 def flatten_manifest(manifest: ModelManifest) -> ModelManifest:
     """
     Flatten the manifest by keeping only the first location entry.

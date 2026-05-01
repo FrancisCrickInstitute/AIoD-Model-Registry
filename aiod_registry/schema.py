@@ -197,6 +197,10 @@ class ModelVersionTask(StrictModel):
 class ModelVersion(StrictModel):
     tasks: dict[Task, ModelVersionTask]
     metadata: Optional[Metadata] = None
+    slug: str = Field(
+        default="",
+        description="Filesystem-safe identifier derived from the version name (lowercase, spaces replaced with underscores). Auto-derived if not set.",
+    )
 
 
 class ModelManifest(StrictModel):
@@ -222,6 +226,13 @@ class ModelManifest(StrictModel):
                 if task.params is None and self.params is not None:
                     task.params = self.params
                     task._params_inherited = True
+        return self
+
+    @model_validator(mode="after")
+    def fill_version_slugs(self):
+        for version_name, version in self.versions.items():
+            if not version.slug:
+                version.slug = shorten_name(version_name)
         return self
 
 

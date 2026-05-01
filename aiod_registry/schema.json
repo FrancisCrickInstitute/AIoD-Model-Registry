@@ -307,6 +307,12 @@
             }
           ],
           "default": null
+        },
+        "slug": {
+          "default": "",
+          "description": "Filesystem-safe identifier derived from the version name (lowercase, spaces replaced with underscores). Auto-derived if not set.",
+          "title": "Slug",
+          "type": "string"
         }
       },
       "required": [
