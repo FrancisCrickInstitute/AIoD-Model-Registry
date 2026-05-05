@@ -175,30 +175,32 @@ class Metadata(StrictModel):
         return f"Description: {self.description}\n{misc_info if len(misc_info) > 0 else ''}{all_pubs}"
 
 
-class ModelVersionTask(StrictModel):
-    location: Union[str, list[str]] = Field(
-        ...,
-        description="A url or a filepath, or list of alternative locations (skipped if location does not exist/cannot be read!)",
+class LocationEntry(StrictModel):
+    location: str = Field(..., description="A URL or file path to the model artifact.")
+    config_path: Optional[str] = Field(
+        None,
+        description="Optional path or URL to the config file paired with this location.",
     )
-    config_path: Optional[Union[str, list[str]]] = None
+
+
+class ModelVersionTask(StrictModel):
+    locations: list[LocationEntry] = Field(
+        ...,
+        description="Ordered list of (location, config_path) pairs. The first accessible entry is used.",
+        min_length=1,
+    )
     params: Optional[list[ModelParam]] = None
     metadata: Optional[Metadata] = None
     _params_inherited: bool = PrivateAttr(default=False)
-
-    @model_validator(mode="after")
-    def get_config_path(self):
-        if not isinstance(self.location, list):
-            self.location = [self.location]
-        if self.config_path is None:
-            self.config_path = [None] * len(self.location)
-        elif not isinstance(self.config_path, list):
-            self.config_path = [self.config_path]
-        return self
 
 
 class ModelVersion(StrictModel):
     tasks: dict[Task, ModelVersionTask]
     metadata: Optional[Metadata] = None
+    slug: str = Field(
+        default="",
+        description="Filesystem-safe identifier derived from the version name (lowercase, spaces replaced with underscores). Auto-derived if not set.",
+    )
 
 
 class ModelManifest(StrictModel):
@@ -224,6 +226,13 @@ class ModelManifest(StrictModel):
                 if task.params is None and self.params is not None:
                     task.params = self.params
                     task._params_inherited = True
+        return self
+
+    @model_validator(mode="after")
+    def fill_version_slugs(self):
+        for version_name, version in self.versions.items():
+            if not version.slug:
+                version.slug = shorten_name(version_name)
         return self
 
 

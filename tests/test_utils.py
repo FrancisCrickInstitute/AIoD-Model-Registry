@@ -45,14 +45,14 @@ EXAMPLE_MANIFEST = {
         "cyto3": {
             "tasks": {
                 "cyto": {
-                    "location": [
-                        "https://www.cellpose.org/models/cyto3",
-                        "file:///nonexistent/path",
+                    "locations": [
+                        {"location": "https://www.cellpose.org/models/cyto3"},
+                        {"location": "file:///nonexistent/path"},
                     ]
                 }
             }
         },
-        "cyto2": {"tasks": {"cyto": {"location": ["file:///nonexistent/path"]}}},
+        "cyto2": {"tasks": {"cyto": {"locations": [{"location": "file:///nonexistent/path"}]}}},
     },
     "params": [
         {
@@ -84,14 +84,14 @@ def test_load_manifests_basic(temp_manifest_file):
 
 
 def test_flatten_manifest(temp_manifest_file):
-    # Instantiate directly from raw JSON so location is still a list pre-flatten
     with open(temp_manifest_file) as f:
         raw_json = json.load(f)
     manifest = ModelManifest(**raw_json)
     flat = flatten_manifest(manifest)
-    # Should have string, not list, for location
-    loc = flat.versions["cyto3"].tasks["cyto"].location
-    assert isinstance(loc, str)
+    # Should have exactly one LocationEntry after flattening
+    locations = flat.versions["cyto3"].tasks["cyto"].locations
+    assert len(locations) == 1
+    assert isinstance(locations[0].location, str)
 
 
 def test_filter_location_and_empty_manifests(temp_manifest_file):
@@ -113,6 +113,48 @@ def test_filter_location_and_empty_manifests(temp_manifest_file):
     assert filtered.short_name in filtered_dict
 
 
+def test_filter_location_preserves_paired_config_path():
+    # The accessible entry's config_path must be retained alongside its location.
+    manifest_data = {
+        "name": "PairedConfig",
+        "short_name": "paired_config",
+        "metadata": {"description": "Test paired config_path"},
+        "versions": {
+            "v1": {
+                "tasks": {
+                    "mito": {
+                        "locations": [
+                            {"location": "file:///nonexistent/path", "config_path": "file:///nonexistent/cfg1.yml"},
+                            {"location": "https://example.com/model", "config_path": "/nonexistent/cfg2.yml"},
+                        ]
+                    }
+                }
+            }
+        },
+    }
+    manifest = ModelManifest(**manifest_data)
+    filtered, changed, num_removed = filter_location(manifest)
+    assert changed is False
+    task = filtered.versions["v1"].tasks["mito"]
+    assert len(task.locations) == 1
+    assert task.locations[0].location == "https://example.com/model"
+    assert task.locations[0].config_path == "/nonexistent/cfg2.yml"
+
+
+def test_empty_locations_raises():
+    from pydantic import ValidationError
+    manifest_data = {
+        "name": "Bad Model",
+        "short_name": "bad_model",
+        "metadata": {"description": "Test"},
+        "versions": {
+            "v1": {"tasks": {"cyto": {"locations": []}}}
+        },
+    }
+    with pytest.raises(ValidationError):
+        ModelManifest(**manifest_data)
+
+
 def test_filter_location_no_change(tmp_path):
     # Manifest with all accessible locations (URLs)
     manifest_data = {
@@ -125,9 +167,9 @@ def test_filter_location_no_change(tmp_path):
             "v1": {
                 "tasks": {
                     "cyto": {
-                        "location": [
-                            "https://example.com/model1",
-                            "https://example.com/model2",
+                        "locations": [
+                            {"location": "https://example.com/model1"},
+                            {"location": "https://example.com/model2"},
                         ],
                     }
                 }
@@ -237,7 +279,7 @@ MANIFEST_WITH_LIST_PARAMS = {
     "versions": {
         "v1": {
             "tasks": {
-                "cyto": {"location": "https://example.com/model"}
+                "cyto": {"locations": [{"location": "https://example.com/model"}]}
             }
         }
     },
@@ -263,7 +305,7 @@ MANIFEST_NO_PARAMS = {
     "versions": {
         "v1": {
             "tasks": {
-                "mito": {"location": "https://example.com/model"}
+                "mito": {"locations": [{"location": "https://example.com/model"}]}
             }
         }
     },
@@ -376,7 +418,7 @@ def test_short_name_auto_derived_from_name():
         "name": "My Cool Model",
         "metadata": {"description": "Test"},
         "versions": {
-            "v1": {"tasks": {"cyto": {"location": "https://example.com/model"}}}
+            "v1": {"tasks": {"cyto": {"locations": [{"location": "https://example.com/model"}]}}}
         },
     }
     manifest = ModelManifest(**manifest_data)
@@ -393,7 +435,7 @@ def test_params_inherited_flag_task_level():
             "v1": {
                 "tasks": {
                     "cyto": {
-                        "location": "https://example.com/model",
+                        "locations": [{"location": "https://example.com/model"}],
                         "params": [{"name": "Threshold", "arg_name": "threshold", "value": 0.5}],
                     }
                 }
@@ -416,7 +458,7 @@ def test_save_all_default_configs_task_specific_file(tmp_path):
             "v1": {
                 "tasks": {
                     "cyto": {
-                        "location": "https://example.com/model",
+                        "locations": [{"location": "https://example.com/model"}],
                         "params": [{"name": "Threshold", "arg_name": "threshold", "value": 0.5}],
                     }
                 }
