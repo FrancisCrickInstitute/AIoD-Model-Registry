@@ -69,33 +69,6 @@
       "title": "Author",
       "type": "object"
     },
-    "FinetuningMeta": {
-      "additionalProperties": false,
-      "properties": {
-        "config_file_location": {
-          "title": "Config File Location",
-          "type": "string"
-        },
-        "patch_size_divisor": {
-          "title": "Patch Size Divisor",
-          "type": "integer"
-        },
-        "avail_layers": {
-          "items": {
-            "type": "string"
-          },
-          "title": "Avail Layers",
-          "type": "array"
-        }
-      },
-      "required": [
-        "config_file_location",
-        "patch_size_divisor",
-        "avail_layers"
-      ],
-      "title": "FinetuningMeta",
-      "type": "object"
-    },
     "Metadata": {
       "additionalProperties": false,
       "properties": {
@@ -382,13 +355,18 @@
         "finetuning_meta_data": {
           "anyOf": [
             {
-              "$ref": "#/$defs/FinetuningMeta"
+              "items": {
+                "$ref": "#/$defs/ModelParam"
+              },
+              "type": "array"
             },
             {
               "type": "null"
             }
           ],
-          "default": null
+          "default": null,
+          "description": "Parameters required for fine-tuning this model. Same schema as `params`; drives the dynamic fine-tuning UI and is serialised to a YAML config passed to the fine-tuning script.",
+          "title": "Finetuning Meta Data"
         },
         "metadata": {
           "anyOf": [
@@ -484,16 +462,9 @@
       "type": "string"
     },
     "short_name": {
-      "anyOf": [
-        {
-          "type": "string"
-        },
-        {
-          "type": "null"
-        }
-      ],
-      "default": null,
-      "title": "Short Name"
+      "default": "",
+      "title": "Short Name",
+      "type": "string"
     },
     "versions": {
       "additionalProperties": {

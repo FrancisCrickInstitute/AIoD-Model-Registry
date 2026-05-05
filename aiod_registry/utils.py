@@ -215,12 +215,17 @@ def add_model_local(
     model_task: str,
     location: str,
     manifest_name: str,
-    finetuning_meta_data: dict,
+    finetuning_meta_data: Optional[list[dict]],
     base_model: str,
     cache_dir: Path | str,
 ):
     """
-    Saves the finetuned model to local cache of finetuned models
+    Saves the finetuned model to local cache of finetuned models.
+
+    ``finetuning_meta_data`` is a list of serialised ``ModelParam`` dicts
+    (or ``None``), matching the global manifest schema. It captures the
+    model's fine-tuning parameter schema rather than user-entered values —
+    user values are persisted into the per-run finetune YAML config.
     """
     local_manifests_dir = Path(cache_dir) / "local_manifests"
     local_manifests_dir.mkdir(parents=True, exist_ok=True)
