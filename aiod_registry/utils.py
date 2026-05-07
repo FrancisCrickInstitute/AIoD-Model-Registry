@@ -118,6 +118,28 @@ def load_manifests(
     for path in paths:
         with open(path, "r") as f:
             json_manifest = json.load(f)
+            # Merge base_finetuning_meta_data into each version/task if present
+            base_ft = json_manifest.get("finetune_base_params", [])
+            for v_name, version in json_manifest.get("versions", {}).items():
+                for t_name, task in version.get("tasks", {}).items():
+                    # If finetuning_meta_data is empty or missing, use base
+                    ft = task.get("finetuning_meta_data", [])
+                    if not ft and base_ft:
+                        task["finetuning_meta_data"] = base_ft
+                    elif ft and base_ft:
+                        # Merge: override base with any matching arg_name in ft
+                        base_ft_dict = {p["arg_name"]: p for p in base_ft if "arg_name" in p}
+                        ft_dict = {p["arg_name"]: p for p in ft if "arg_name" in p}
+                        merged = list(base_ft_dict.values())
+                        for arg, param in ft_dict.items():
+                            # Replace base param if overridden
+                            for i, bp in enumerate(merged):
+                                if bp["arg_name"] == arg:
+                                    merged[i] = param
+                                    break
+                            else:
+                                merged.append(param)
+                        task["finetuning_meta_data"] = merged
             manifest = ModelManifest(**json_manifest)
             manifests[manifest.short_name] = manifest
 
@@ -215,12 +237,17 @@ def add_model_local(
     model_task: str,
     location: str,
     manifest_name: str,
-    finetuning_meta_data: dict,
+    finetuning_meta_data: Optional[list[dict]],
     base_model: str,
     cache_dir: Path | str,
 ):
     """
-    Saves the finetuned model to local cache of finetuned models
+    Saves the finetuned model to local cache of finetuned models.
+
+    ``finetuning_meta_data`` is a list of serialised ``ModelParam`` dicts
+    (or ``None``), matching the global manifest schema. It captures the
+    model's fine-tuning parameter schema rather than user-entered values —
+    user values are persisted into the per-run finetune YAML config.
     """
     local_manifests_dir = Path(cache_dir) / "local_manifests"
     local_manifests_dir.mkdir(parents=True, exist_ok=True)

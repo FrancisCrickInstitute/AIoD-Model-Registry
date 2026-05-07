@@ -177,12 +177,6 @@ class Metadata(StrictModel):
         return f"Description: {self.description}\n{misc_info if len(misc_info) > 0 else ''}{all_pubs}"
 
 
-class FinetuningMeta(StrictModel):
-    config_file_location: str
-    patch_size_divisor: int
-    avail_layers: list[str]
-
-
 class ModelVersionTask(StrictModel):
     location: Union[str, list[str]] = Field(
         ...,
@@ -190,7 +184,14 @@ class ModelVersionTask(StrictModel):
     )
     config_path: Optional[Union[str, list[str]]] = None
     params: Optional[list[ModelParam]] = None
-    finetuning_meta_data: Optional[FinetuningMeta] = None
+    finetuning_meta_data: Optional[list[ModelParam]] = Field(
+        default=None,
+        description=(
+            "Parameters required for fine-tuning this model. Same schema as `params`; "
+            "drives the dynamic fine-tuning UI and is serialised to a YAML config "
+            "passed to the fine-tuning script."
+        ),
+    )
     metadata: Optional[Metadata] = None
     _params_inherited: bool = PrivateAttr(default=False)
 
@@ -216,6 +217,14 @@ class ModelManifest(StrictModel):
     short_name: str = ""
     versions: dict[ModelName, ModelVersion]
     params: Optional[list[ModelParam]] = None
+    finetune_base_params: Optional[list[ModelParam]] = Field(
+        default=None,
+        description=(
+            "Parameters required for fine-tuning this model. Same schema as `params`; "
+            "drives the dynamic fine-tuning UI and is serialised to a YAML config "
+            "passed to the fine-tuning script."
+        ),
+    )
     config: Optional[Path] = None
     metadata: Metadata
     usage_guide: Optional[Usage] = None
