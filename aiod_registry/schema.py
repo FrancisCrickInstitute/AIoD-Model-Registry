@@ -217,6 +217,14 @@ class ModelManifest(StrictModel):
     short_name: str = ""
     versions: dict[ModelName, ModelVersion]
     params: Optional[list[ModelParam]] = None
+    finetune_base_params: Optional[list[ModelParam]] = Field(
+        default=None,
+        description=(
+            "Parameters required for fine-tuning this model. Same schema as `params`; "
+            "drives the dynamic fine-tuning UI and is serialised to a YAML config "
+            "passed to the fine-tuning script."
+        ),
+    )
     config: Optional[Path] = None
     metadata: Metadata
     usage_guide: Optional[Usage] = None

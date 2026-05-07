@@ -64,44 +64,39 @@
             }
         ]
     },
+    "finetune_base_params": [
+        {
+            "name": "Learning Rate",
+            "arg_name": "learning_rate",
+            "value": 0.001,
+            "tooltip": "Learning rate for the optimiser."
+        },
+        {
+            "name": "Weight Decay",
+            "arg_name": "weight_decay",
+            "value": 0.0001,
+            "tooltip": "Weight decay (L2 regularisation) for the optimiser."
+        },
+        {
+            "name": "Use SGD",
+            "arg_name": "sdg",
+            "value": false,
+            "tooltip": "Use SGD optimiser instead of the default (AdamW)."
+        },
+        {
+            "name": "Momentum",
+            "arg_name": "momentum",
+            "value": 0.1,
+            "tooltip": "Momentum for the SGD optimiser (only used if SGD is enabled)."
+        }
+    ],
     "versions": {
         "cyto3": {
             "base_model": "cyto3",
             "tasks": {
                 "cyto": {
                     "location": "https://www.cellpose.org/models/cyto3",
-                    "finetuning_meta_data": [
-                        {
-                            "name": "Learning Rate",
-                            "arg_name": "learning_rate",
-                            "value": 0.001,
-                            "tooltip": "Learning rate for the optimiser."
-                        },
-                        {
-                            "name": "Weight Decay",
-                            "arg_name": "weight_decay",
-                            "value": 0.0001,
-                            "tooltip": "Weight decay (L2 regularisation) for the optimiser."
-                        },
-                        {
-                            "name": "Use SGD",
-                            "arg_name": "sdg",
-                            "value": false,
-                            "tooltip": "Use SGD optimiser instead of the default (AdamW)."
-                        },
-                        {
-                            "name": "Momentum",
-                            "arg_name": "momentum",
-                            "value": 0.9,
-                            "tooltip": "Momentum for the SGD optimiser (only used if SGD is enabled)."
-                        },
-                        {
-                            "name": "Finetune Layers",
-                            "arg_name": "finetune_layers",
-                            "value": ["all_layers"],
-                            "tooltip": "Which layers to unfreeze when fine-tuning."
-                        }
-                    ]
+                    "finetuning_meta_data": []
                 }
             }
         },
@@ -110,38 +105,7 @@
             "tasks": {
                 "nuclei": {
                     "location": "https://www.cellpose.org/models/nucleitorch_0",
-                    "finetuning_meta_data": [
-                        {
-                            "name": "Learning Rate",
-                            "arg_name": "learning_rate",
-                            "value": 0.001,
-                            "tooltip": "Learning rate for the optimiser."
-                        },
-                        {
-                            "name": "Weight Decay",
-                            "arg_name": "weight_decay",
-                            "value": 0.0001,
-                            "tooltip": "Weight decay (L2 regularisation) for the optimiser."
-                        },
-                        {
-                            "name": "Use SGD",
-                            "arg_name": "sdg",
-                            "value": false,
-                            "tooltip": "Use SGD optimiser instead of the default (AdamW)."
-                        },
-                        {
-                            "name": "Momentum",
-                            "arg_name": "momentum",
-                            "value": 0.9,
-                            "tooltip": "Momentum for the SGD optimiser (only used if SGD is enabled)."
-                        },
-                        {
-                            "name": "Finetune Layers",
-                            "arg_name": "finetune_layers",
-                            "value": ["all_layers"],
-                            "tooltip": "Which layers to unfreeze when fine-tuning."
-                        }
-                    ]
+                    "finetuning_meta_data": []
                 }
             }
         },
@@ -150,38 +114,7 @@
             "tasks": {
                 "cyto": {
                     "location": "https://www.cellpose.org/models/cytotorch_0",
-                    "finetuning_meta_data": [
-                        {
-                            "name": "Learning Rate",
-                            "arg_name": "learning_rate",
-                            "value": 0.001,
-                            "tooltip": "Learning rate for the optimiser."
-                        },
-                        {
-                            "name": "Weight Decay",
-                            "arg_name": "weight_decay",
-                            "value": 0.0001,
-                            "tooltip": "Weight decay (L2 regularisation) for the optimiser."
-                        },
-                        {
-                            "name": "Use SGD",
-                            "arg_name": "sdg",
-                            "value": false,
-                            "tooltip": "Use SGD optimiser instead of the default (AdamW)."
-                        },
-                        {
-                            "name": "Momentum",
-                            "arg_name": "momentum",
-                            "value": 0.9,
-                            "tooltip": "Momentum for the SGD optimiser (only used if SGD is enabled)."
-                        },
-                        {
-                            "name": "Finetune Layers",
-                            "arg_name": "finetune_layers",
-                            "value": ["all_layers"],
-                            "tooltip": "Which layers to unfreeze when fine-tuning."
-                        }
-                    ]
+                    "finetuning_meta_data": []
                 }
             }
         },
@@ -190,38 +123,7 @@
             "tasks": {
                 "cyto": {
                     "location": "https://www.cellpose.org/models/cyto2torch_0",
-                    "finetuning_meta_data": [
-                        {
-                            "name": "Learning Rate",
-                            "arg_name": "learning_rate",
-                            "value": 0.001,
-                            "tooltip": "Learning rate for the optimiser."
-                        },
-                        {
-                            "name": "Weight Decay",
-                            "arg_name": "weight_decay",
-                            "value": 0.0001,
-                            "tooltip": "Weight decay (L2 regularisation) for the optimiser."
-                        },
-                        {
-                            "name": "Use SGD",
-                            "arg_name": "sdg",
-                            "value": false,
-                            "tooltip": "Use SGD optimiser instead of the default (AdamW)."
-                        },
-                        {
-                            "name": "Momentum",
-                            "arg_name": "momentum",
-                            "value": 0.9,
-                            "tooltip": "Momentum for the SGD optimiser (only used if SGD is enabled)."
-                        },
-                        {
-                            "name": "Finetune Layers",
-                            "arg_name": "finetune_layers",
-                            "value": ["all_layers"],
-                            "tooltip": "Which layers to unfreeze when fine-tuning."
-                        }
-                    ]
+                    "finetuning_meta_data": []
                 }
             }
         }

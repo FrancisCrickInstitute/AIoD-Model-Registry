@@ -492,6 +492,22 @@
       "default": null,
       "title": "Params"
     },
+    "finetune_base_params": {
+      "anyOf": [
+        {
+          "items": {
+            "$ref": "#/$defs/ModelParam"
+          },
+          "type": "array"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Parameters required for fine-tuning this model. Same schema as `params`; drives the dynamic fine-tuning UI and is serialised to a YAML config passed to the fine-tuning script.",
+      "title": "Finetune Base Params"
+    },
     "config": {
       "anyOf": [
         {
