@@ -83,7 +83,7 @@
             "axes": "YX",
             "tasks": {
                 "nuclei": {
-                    "location": "https://github.com/stardist/stardist-models/releases/download/v0.1/python_2D_versatile_fluo.zip"
+                    "locations": [{"location": "https://github.com/stardist/stardist-models/releases/download/v0.1/python_2D_versatile_fluo.zip"}]
                 }
             }
         },
@@ -91,7 +91,7 @@
             "axes": "YX",
             "tasks": {
                 "nuclei": {
-                    "location": "https://github.com/stardist/stardist-models/releases/download/v0.1/python_2D_versatile_he.zip"
+                    "locations": [{"location": "https://github.com/stardist/stardist-models/releases/download/v0.1/python_2D_versatile_he.zip"}]
                 }
             }
         },
@@ -99,7 +99,7 @@
             "axes": "YX",
             "tasks": {
                 "nuclei": {
-                    "location": "https://github.com/stardist/stardist-models/releases/download/v0.1/python_2D_paper_dsb2018.zip"
+                    "locations": [{"location": "https://github.com/stardist/stardist-models/releases/download/v0.1/python_2D_paper_dsb2018.zip"}]
                 }
             }
         },
@@ -107,7 +107,7 @@
             "axes": "YX",
             "tasks": {
                 "nuclei": {
-                    "location": "https://github.com/stardist/stardist-models/releases/download/v0.1/python_2D_demo.zip"
+                    "locations": [{"location": "https://github.com/stardist/stardist-models/releases/download/v0.1/python_2D_demo.zip"}]
                 }
             }
         },
@@ -115,7 +115,7 @@
             "axes": "ZYX",
             "tasks": {
                 "nuclei": {
-                    "location": "https://github.com/stardist/stardist-models/releases/download/v0.1/python_3D_demo.zip"
+                    "locations": [{"location": "https://github.com/stardist/stardist-models/releases/download/v0.1/python_3D_demo.zip"}]
                 }
             }
         }
