@@ -73,7 +73,7 @@ class ModelParam(StrictModel):
     default: Optional[Union[str, int, float, bool]] = None  # Override default for list values
     tooltip: Optional[str] = None
     dtype: Optional[str] = None  # Used of default value is None
-    type: Optional[str] = None  # e.g. "channel" for image-aware channel selectors
+    param_type: Optional[str] = None  # e.g. "channel" for image-aware channel selectors
     _dtype = None  # Determined from value if given
 
     @model_validator(mode="after")
