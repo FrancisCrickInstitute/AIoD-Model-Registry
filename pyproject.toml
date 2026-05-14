@@ -17,10 +17,21 @@ authors = [
 ]
 dependencies = [
     "pytest",
-    "pydantic >= 2.0"
+    "pytest-cov",
+    "pydantic >= 2.0",
+    "pyyaml",
 ]
 requires-python = ">=3.11"
 dynamic = ["readme"]
 
+[project.scripts]
+aiod-gen-configs = "aiod_registry.utils:_gen_configs_cli"
+
+[tool.setuptools.packages.find]
+include = ["aiod_registry*"]
+
 [tool.setuptools.dynamic]
 readme = {file = ["README.md"], content-type = "text/markdown"}
+
+[tool.pytest.ini_options]
+addopts = "--cov=aiod_registry --cov-report=term-missing"
