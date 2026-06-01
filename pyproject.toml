@@ -16,10 +16,14 @@ authors = [
     {name = "Jon Smith", email = "jon.smith@crick.ac.uk"}
 ]
 dependencies = [
-    "pytest",
-    "pytest-cov",
     "pydantic >= 2.0",
     "pyyaml",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "pytest-cov",
 ]
 requires-python = ">=3.11"
 dynamic = ["readme"]
