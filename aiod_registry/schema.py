@@ -2,7 +2,7 @@ import builtins
 from pathlib import Path
 from typing import Optional, Union
 
-from pydantic import BaseModel, ConfigDict, Field, model_validator, AnyUrl, PrivateAttr
+from pydantic import AfterValidator, BaseModel, ConfigDict, Field, model_validator, AnyUrl, PrivateAttr
 from typing_extensions import Annotated
 
 TASK_NAMES = {
@@ -46,6 +46,24 @@ Usage = Annotated[
         description="A path to a file, a URL, or a string containing the usage guide for the model.",
     ),
 ]
+def _validate_axes(v: str) -> str:
+    if len(set(v)) != len(v):
+        raise ValueError("Axes must not contain repeated characters.")
+    if "Y" not in v or "X" not in v:
+        raise ValueError("Axes must contain at least Y and X.")
+    return v
+
+
+Axes = Annotated[
+    str,
+    Field(
+        ...,
+        min_length=2,
+        pattern=r"^[TCZYX]+$",
+        description="Axes specification for the model (e.g., 'YX' for 2D, 'ZYX' for 3D, 'CZYX' with channels). Must contain at least Y and X, with no repeated letters. Valid characters: T, C, Z, Y, X.",
+    ),
+    AfterValidator(_validate_axes),
+]
 
 
 def print_attr(attr, br: bool = True):
@@ -73,6 +91,7 @@ class ModelParam(StrictModel):
     default: Optional[Union[str, int, float, bool]] = None  # Override default for list values
     tooltip: Optional[str] = None
     dtype: Optional[str] = None  # Used of default value is None
+    param_type: Optional[str] = None  # e.g. "channel" for image-aware channel selectors
     _dtype = None  # Determined from value if given
 
     @model_validator(mode="after")
@@ -195,6 +214,7 @@ class ModelVersionTask(StrictModel):
 
 
 class ModelVersion(StrictModel):
+    axes: Optional[Axes] = None
     tasks: dict[Task, ModelVersionTask]
     metadata: Optional[Metadata] = None
     slug: str = Field(

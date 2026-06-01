@@ -53,6 +53,7 @@
       "name": "Segment Channel",
       "arg_name": "segment_channel",
       "value": 0,
+      "param_type": "channel",
       "tooltip": "What channel to segment on. 0=grayscale, 1=red, 2=green, 3=blue. See https://cellpose.readthedocs.io/en/latest/settings.html#channels for details."
     },
     {

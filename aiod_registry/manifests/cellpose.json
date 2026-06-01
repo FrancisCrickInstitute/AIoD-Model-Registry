@@ -121,12 +121,14 @@
       "name": "Segment Channel",
       "arg_name": "segment_channel",
       "value": 0,
+      "param_type": "channel",
       "tooltip": "What channel to segment on. 0=grayscale, 1=red, 2=green, 3=blue. See https://cellpose.readthedocs.io/en/v3.1.1.1/settings.html#channels for details."
     },
     {
       "name": "Nucleus Channel",
       "arg_name": "nucleus_channel",
       "value": 0,
+      "param_type": "channel",
       "tooltip": "What channel contains nucleus. 0=grayscale, 1=red, 2=green, 3=blue. Unused for 'nuclei' model, where nuclei are in the segment channel. See https://cellpose.readthedocs.io/en/v3.1.1.1/settings.html#channels for details."
     },
     {

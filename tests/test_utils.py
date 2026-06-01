@@ -6,7 +6,7 @@ import pytest
 import yaml
 from pydantic import ValidationError
 
-from aiod_registry.schema import ModelManifest, ModelParam
+from aiod_registry.schema import ModelManifest, ModelParam, ModelVersion
 from aiod_registry.utils import (
     filter_empty_manifests,
     filter_location,
@@ -471,3 +471,51 @@ def test_save_all_default_configs_task_specific_file(tmp_path):
     save_all_default_configs(output_dir=out, paths=[manifest_file])
     assert (out / "task_only_v1_cyto.yaml").exists()
     assert not (out / "task_only.yaml").exists()
+
+
+# ---------------------------------------------------------------------------
+# Axes field validation
+# ---------------------------------------------------------------------------
+
+_AXES_TASK = {"locations": [{"location": "https://example.com/model"}]}
+_AXES_MANIFEST_BASE = {
+    "name": "Axes Test",
+    "metadata": {"description": "Test"},
+}
+
+
+def _make_version(axes):
+    return ModelVersion(axes=axes, tasks={"nuclei": _AXES_TASK})
+
+
+class TestAxes:
+    @pytest.mark.parametrize("axes", ["YX", "XY", "ZYX", "CZYX", "TCZYX", "TYX"])
+    def test_valid(self, axes):
+        v = _make_version(axes)
+        assert v.axes == axes
+
+    def test_none_allowed(self):
+        """axes is optional; None should be accepted."""
+        v = _make_version(None)
+        assert v.axes is None
+
+    @pytest.mark.parametrize("axes", [
+        "Y",        # missing X
+        "X",        # missing Y
+        "ZY",       # missing X
+        "ZX",       # missing Y
+        "",         # empty
+    ])
+    def test_missing_required_axis_raises(self, axes):
+        with pytest.raises(ValidationError):
+            _make_version(axes)
+
+    @pytest.mark.parametrize("axes", ["YYX", "ZYX X", "CZZYYX"])
+    def test_repeated_letters_raises(self, axes):
+        with pytest.raises(ValidationError):
+            _make_version(axes)
+
+    @pytest.mark.parametrize("axes", ["yxz", "Zyx", "RGB", "HWC", "BCZYX"])
+    def test_invalid_characters_raises(self, axes):
+        with pytest.raises(ValidationError):
+            _make_version(axes)
