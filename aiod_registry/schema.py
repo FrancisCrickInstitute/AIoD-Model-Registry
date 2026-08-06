@@ -69,7 +69,16 @@ Axes = Annotated[
         ...,
         min_length=2,
         pattern=r"^[TCZYX]+$",
-        description="Axes specification for the model (e.g., 'YX' for 2D, 'ZYX' for 3D, 'CZYX' with channels). Must contain at least Y and X, with no repeated letters. Valid characters: T, C, Z, Y, X.",
+        description=(
+            "Axes of the array this model version expects as input, in order "
+            "(e.g. 'YX' for a single-channel 2D model, 'ZYX' for 3D, 'YXC' for a model "
+            "that consumes RGB directly). Include 'C' only when the network itself takes "
+            "multiple channels; omit it when a single channel is selected upstream, even "
+            "if the framework's own config always records a channel axis (StarDist, for "
+            "example, always writes 'YXC'/'ZYXC' and distinguishes the two cases via "
+            "n_channel_in). Must contain at least Y and X, with no repeated letters. "
+            "Valid characters: T, C, Z, Y, X."
+        ),
     ),
     AfterValidator(_validate_axes),
 ]
