@@ -92,7 +92,7 @@
       }
     },
     "2D_versatile_he": {
-      "axes": "YX",
+      "axes": "YXC",
       "tasks": {
         "nuclei": {
           "locations": [
