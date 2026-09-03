@@ -276,6 +276,40 @@
           ],
           "default": null,
           "title": "Dtype"
+        },
+        "param_type": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Param Type"
+        },
+        "channel_start": {
+          "default": -1,
+          "description": "Lowest integer value shown in the channel dropdown. -1 means the first item is 'original image as-is' and image channels are 0-based. 0 means the first item is model-specific and image channels are 1-based.",
+          "enum": [
+            -1,
+            0
+          ],
+          "title": "Channel Start",
+          "type": "integer"
+        },
+        "channel_start_label": {
+          "default": "original",
+          "description": "Label for the first channel dropdown item.",
+          "examples": [
+            "original",
+            "Grayscale",
+            "No nucleus channel"
+          ],
+          "minLength": 1,
+          "title": "Channel Start Label",
+          "type": "string"
         }
       },
       "required": [
@@ -291,6 +325,9 @@
         "axes": {
           "anyOf": [
             {
+              "description": "Axes of the array this model version expects as input, in order (e.g. 'YX' for a single-channel 2D model, 'ZYX' for 3D, 'YXC' for a model that consumes RGB directly). Include 'C' only when the network itself takes multiple channels; omit it when a single channel is selected upstream, even if the framework's own config always records a channel axis (StarDist, for example, always writes 'YXC'/'ZYXC' and distinguishes the two cases via n_channel_in). Must contain at least Y and X, with no repeated letters. Valid characters: T, C, Z, Y, X.",
+              "minLength": 2,
+              "pattern": "^[TCZYX]+$",
               "type": "string"
             },
             {
@@ -298,7 +335,6 @@
             }
           ],
           "default": null,
-          "description": "Axes specification for the model (e.g., 'YX' for 2D, 'ZYX' for 3D, 'YXC' or 'CZYX' with channels)",
           "title": "Axes"
         },
         "tasks": {

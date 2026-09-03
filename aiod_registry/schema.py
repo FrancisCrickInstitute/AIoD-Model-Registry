@@ -305,11 +305,24 @@ class ModelManifest(StrictModel):
         return self
 
 
-if __name__ == "__main__":
+def generate_schema(output_path: Path | None = None) -> Path:
+    """Write ModelManifest's JSON schema to ``output_path`` (default: schema.json alongside this file)."""
     import json
 
-    schema_fpath = Path(__file__).parent / "schema.json"
+    if output_path is None:
+        output_path = Path(__file__).parent / "schema.json"
 
-    # Write the schema to file
-    with open(schema_fpath, "w") as f:
+    with open(output_path, "w") as f:
         f.write(json.dumps(ModelManifest.model_json_schema(), indent=2))
+
+    return output_path
+
+
+def _gen_schema_cli() -> None:
+    """Console script entry point for ``aiod-gen-schema``."""
+    output_path = generate_schema()
+    print(f"Saved {output_path}")
+
+
+if __name__ == "__main__":
+    _gen_schema_cli()

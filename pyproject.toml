@@ -45,6 +45,7 @@ dev = ["pytest", "pytest-cov"]
 
 [project.scripts]
 aiod-gen-configs = "aiod_registry.utils:_gen_configs_cli"
+aiod-gen-schema = "aiod_registry.schema:_gen_schema_cli"
 
 [build-system]
 requires = ["hatchling", "hatch-vcs"]
